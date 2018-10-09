@@ -1,11 +1,12 @@
 package com.wistronits.wistlotto.repository.tables;
 
-import com.wistronits.wistlotto.domain.tables.TEmpInfo;
-import com.wistronits.wistlotto.domain.tables.TEmpInfoCriteria;
-import com.wistronits.wistlotto.domain.tables.TEmpInfoKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.wistronits.wistlotto.model.tables.TEmpInfo;
+import com.wistronits.wistlotto.model.tables.TEmpInfoCriteria;
+import com.wistronits.wistlotto.model.tables.TEmpInfoKey;
 
 @Mapper
 public interface TEmpInfoRepository {

@@ -1,11 +1,12 @@
 package com.wistronits.wistlotto.repository.tables;
 
-import com.wistronits.wistlotto.domain.tables.TPrizeInfo;
-import com.wistronits.wistlotto.domain.tables.TPrizeInfoCriteria;
-import com.wistronits.wistlotto.domain.tables.TPrizeInfoKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.wistronits.wistlotto.model.tables.TPrizeInfo;
+import com.wistronits.wistlotto.model.tables.TPrizeInfoCriteria;
+import com.wistronits.wistlotto.model.tables.TPrizeInfoKey;
 
 @Mapper
 public interface TPrizeInfoRepository {

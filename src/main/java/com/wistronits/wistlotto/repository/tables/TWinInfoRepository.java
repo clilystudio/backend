@@ -1,10 +1,11 @@
 package com.wistronits.wistlotto.repository.tables;
 
-import com.wistronits.wistlotto.domain.tables.TWinInfo;
-import com.wistronits.wistlotto.domain.tables.TWinInfoCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.wistronits.wistlotto.model.tables.TWinInfo;
+import com.wistronits.wistlotto.model.tables.TWinInfoCriteria;
 
 @Mapper
 public interface TWinInfoRepository {

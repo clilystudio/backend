@@ -21,7 +21,7 @@
         <javaTypeResolver type="com.wistronits.wistlotto.framework.mybatis.TypeResolverPlugin">
             <property name="forceBigDecimals" value="true" />
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="com.wistronits.wistlotto.domain.tables" targetProject="wistlotto/src/main/java">
+        <javaModelGenerator targetPackage="com.wistronits.wistlotto.model.tables" targetProject="wistlotto/src/main/java">
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
         <sqlMapGenerator targetPackage="com.wistronits.wistlotto.mapper.tables" targetProject="wistlotto/src/main/resources" />

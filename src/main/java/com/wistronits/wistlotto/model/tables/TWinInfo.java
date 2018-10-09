@@ -1,4 +1,4 @@
-package com.wistronits.wistlotto.domain.tables;
+package com.wistronits.wistlotto.model.tables;
 
 import java.io.Serializable;
 

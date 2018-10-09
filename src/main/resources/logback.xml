@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<!-- see http://docs.spring.io/spring-boot/docs/current/reference/html/howto-logging.html#howto-configure-logback-for-loggin -->
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/base.xml" />
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level -- %logger{40} : %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>C:/wistlotto/application_%d{yyyyMMdd}.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level -- %logger{100} : %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="SQL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>C:/wistlotto/sql_%d{yyyyMMdd}.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level -- %logger{100} : %msg%n</pattern>
+    </encoder>
+  </appender>
+  <appender name="SPRING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>C:/wistlotto/spring_%d{yyyyMMdd}.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} %-5level -- %logger{100} : %msg%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="org.springframework" additivity="false">
+    <level value="info" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SPRING_LOG" />
+  </logger>
+  <logger name="org.thymeleaf" additivity="false">
+    <level value="info" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SPRING_LOG" />
+  </logger>
+  <logger name="org" additivity="false">
+    <level value="info" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SPRING_LOG" />
+  </logger>
+  <logger name="com.wistronits.wistlotto.repository" additivity="false">
+    <level value="DEBUG" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SQL_LOG" />
+  </logger>
+  <logger name="com.wistronits.wistlotto" additivity="false">
+    <level value="DEBUG" />
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="APPLICATION_LOG" />
+  </logger>
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="SPRING_LOG" />
+  </root>
+</configuration>

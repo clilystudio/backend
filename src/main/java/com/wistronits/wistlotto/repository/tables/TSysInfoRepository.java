@@ -1,11 +1,12 @@
 package com.wistronits.wistlotto.repository.tables;
 
-import com.wistronits.wistlotto.domain.tables.TSysInfo;
-import com.wistronits.wistlotto.domain.tables.TSysInfoCriteria;
-import com.wistronits.wistlotto.domain.tables.TSysInfoKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import com.wistronits.wistlotto.model.tables.TSysInfo;
+import com.wistronits.wistlotto.model.tables.TSysInfoCriteria;
+import com.wistronits.wistlotto.model.tables.TSysInfoKey;
 
 @Mapper
 public interface TSysInfoRepository {
