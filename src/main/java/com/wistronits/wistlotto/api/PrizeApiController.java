@@ -1,4 +1,4 @@
-package com.wistronits.wistlotto.controller;
+package com.wistronits.wistlotto.api;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.wistronits.wistlotto.service.PrizeService;
 
 @RestController
 @RequestMapping(value = "/prizes")
-public class PrizeController {
+public class PrizeApiController {
 	
     @Inject
 	private PrizeService prizeService;

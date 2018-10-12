@@ -1,4 +1,4 @@
-package com.wistronits.wistlotto.controller;
+package com.wistronits.wistlotto.api;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping(value = "/emp")
 @Slf4j
-public class EmpController {
+public class EmpApiController {
 	
     @Inject
 	private EmpService empService;
