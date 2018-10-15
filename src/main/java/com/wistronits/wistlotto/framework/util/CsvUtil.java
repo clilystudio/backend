@@ -9,9 +9,11 @@ import com.univocity.parsers.common.TextParsingException;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+import com.wistronits.wistlotto.framework.exception.SystemException;
+import com.wistronits.wistlotto.framework.message.MessageId;
 
 public class CsvUtil {
-	public static void loadFile(MultipartFile mpf, RowProcessor processor) throws IOException {
+	public static void loadFile(MultipartFile mpf, RowProcessor processor) throws SystemException {
 		InputStream in = null;
 		try {
 			in = mpf.getInputStream();
@@ -23,10 +25,12 @@ public class CsvUtil {
 			settings.setColumnReorderingEnabled(false);
 			CsvParser parser = new CsvParser(settings);
 			parser.parse(in, "UTF-8");
-		} catch (IOException e) {
-			throw e;
 		} catch (TextParsingException e) {
-			throw e;
+			throw new SystemException(e, MessageId.MBE1002);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			throw new SystemException(e, MessageId.MBE1003);
+		} catch (IOException e) {
+			throw new SystemException(e, MessageId.MBE1001);
 		}
 	}
 }

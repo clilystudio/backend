@@ -70,6 +70,11 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addCorsMappings(registry);
+		registry.addMapping("/**")
+        .allowedOrigins("*")
+        .allowCredentials(true)
+        .allowedMethods("GET","POST", "PUT", "DELETE")
+        .allowedHeaders("*");
 	}
 
 	@Override

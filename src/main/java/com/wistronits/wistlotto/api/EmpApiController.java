@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wistronits.wistlotto.framework.message.MessageId;
+import com.wistronits.wistlotto.framework.message.SystemMessage;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.UploadCSVModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
@@ -19,7 +21,7 @@ import com.wistronits.wistlotto.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping(value = "/emp")
+@RequestMapping(value = "/api/emp")
 @Slf4j
 public class EmpApiController {
 	
@@ -41,12 +43,15 @@ public class EmpApiController {
 	@PostMapping("/upload")
 	public CommonResultModel uploadAll(@ModelAttribute UploadCSVModel model) {
 		CommonResultModel result = new CommonResultModel();
-		if (model.isClearFlag() && empService.clearAll()) {
-			result.setCode(-2);
-			result.setMessage("清除员工表失败");
-			log.warn("清除员工表失败");
+		if (model.isClearFlag()) {
+			if (!empService.clearAll()) {
+				result.setCode(2);
+				result.setMessage(new SystemMessage(MessageId.MBE1004).getMessage());
+				log.warn("清除员工表失败");
+				return result;
+			}
 		}
-		empService.uploadAll(model.getFile());
+		result = empService.uploadAll(model.getFile());
 		return result;
 	}
 }
