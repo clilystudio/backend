@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +34,12 @@ public class EmpApiController {
 	public List<TEmpInfo> getList() {
 		// 处理"/emp/list"的GET请求，用来获取员工列表
 		return empService.getEmpList();
+	}
+	
+	@PostMapping("/delete")
+	public CommonResultModel deleteEmps(@RequestBody String[] empIds) {
+		// 处理"/emp/delete"的POST请求，用来删除指定ID的员工
+		return empService.deleteEmps(empIds);
 	}
 	
 	@GetMapping("/lotto/{prizeId}")

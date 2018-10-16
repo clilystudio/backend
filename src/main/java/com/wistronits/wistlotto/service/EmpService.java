@@ -12,6 +12,7 @@ import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.EmpInfoModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.model.tables.TEmpInfoCriteria;
+import com.wistronits.wistlotto.model.tables.TEmpInfoKey;
 import com.wistronits.wistlotto.framework.exception.SystemException;
 import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
@@ -31,7 +32,9 @@ public class EmpService {
 	
 	// 获取全部奖项列表
 	public List<TEmpInfo> getEmpList() {
-		return null;
+		TEmpInfoCriteria example = new TEmpInfoCriteria();
+		example.setOrderByClause("emp_id asc");
+		return empInfoRespository.selectByExample(example);
 	}
 	// 获取全部奖项列表
 	public List<TEmpInfo> getLottoEmp(final String prizeId) {
@@ -63,6 +66,18 @@ public class EmpService {
 			result.setCode(1);
 			result.setMessage(e.getMessages().get(0).getMessage());
 		}
+		return result;
+	}
+	
+	public CommonResultModel deleteEmps(String[] empIds) {
+		CommonResultModel result = new CommonResultModel();
+		for (String empId : empIds) {			
+			TEmpInfoKey key = new TEmpInfoKey();
+			key.setEmpId(empId);
+			empInfoRespository.deleteByPrimaryKey(key);
+		}
+		result.setCode(0);
+		result.setMessage(new SystemMessage(MessageId.MBI1002).getMessage());
 		return result;
 	}
 }
