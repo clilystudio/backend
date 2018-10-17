@@ -27,14 +27,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EmpService {
 	@Inject
-	private TEmpInfoRepository empInfoRespository;
+	private TEmpInfoRepository empInfoRepository;
 	
 	
 	// 获取全部奖项列表
 	public List<TEmpInfo> getEmpList() {
 		TEmpInfoCriteria example = new TEmpInfoCriteria();
 		example.setOrderByClause("emp_id asc");
-		return empInfoRespository.selectByExample(example);
+		return empInfoRepository.selectByExample(example);
 	}
 	// 获取全部奖项列表
 	public List<TEmpInfo> getLottoEmp(final String prizeId) {
@@ -44,7 +44,7 @@ public class EmpService {
 	public boolean clearAll() {
 		log.debug("###Clear All");
 		TEmpInfoCriteria example = new TEmpInfoCriteria();
-		int count = empInfoRespository.deleteByExample(example);
+		int count = empInfoRepository.deleteByExample(example);
 		log.debug("delete emp:" + count);
 		return true;
 	}
@@ -57,10 +57,10 @@ public class EmpService {
 			List<EmpInfoModel> empAllInfo = processor.getBeans();
 			for (EmpInfoModel empInfoModel : empAllInfo) {
 				TEmpInfo empInfo = ConverterUtil.convertObject(empInfoModel, TEmpInfo.class);
-				empInfoRespository.insert(empInfo);
+				empInfoRepository.insert(empInfo);
 			}
 			result.setCode(0);
-			result.setMessage(new SystemMessage(MessageId.MBE1001).getMessage());
+			result.setMessage(new SystemMessage(MessageId.MBI1001).getMessage());
 		} catch (SystemException e) {
 			log.error(e.getLocalizedMessage());
 			result.setCode(1);
@@ -74,7 +74,7 @@ public class EmpService {
 		for (String empId : empIds) {			
 			TEmpInfoKey key = new TEmpInfoKey();
 			key.setEmpId(empId);
-			empInfoRespository.deleteByPrimaryKey(key);
+			empInfoRepository.deleteByPrimaryKey(key);
 		}
 		result.setCode(0);
 		result.setMessage(new SystemMessage(MessageId.MBI1002).getMessage());
@@ -85,12 +85,12 @@ public class EmpService {
 		CommonResultModel result = new CommonResultModel();
 		TEmpInfoKey key = new TEmpInfoKey();
 		key.setEmpId(empInfo.getEmpId());
-		if (empInfoRespository.selectByPrimaryKey(empInfo) != null) {
+		if (empInfoRepository.selectByPrimaryKey(empInfo) != null) {
 			result.setCode(1);
 			result.setMessage(new SystemMessage(MessageId.MBE1005).getMessage());
 			return result;
 		}
-		empInfoRespository.insert(empInfo);
+		empInfoRepository.insert(empInfo);
 		result.setCode(0);
 		result.setMessage(new SystemMessage(MessageId.MBI1003).getMessage());
 		return result;
@@ -98,12 +98,12 @@ public class EmpService {
 	
 	public CommonResultModel editEmp(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
-		if (empInfoRespository.updateByPrimaryKey(empInfo) == 0) {
+		if (empInfoRepository.updateByPrimaryKey(empInfo) == 0) {
 			result.setCode(1);
 			result.setMessage(new SystemMessage(MessageId.MBE1006).getMessage());
 			return result;
 		}
-		empInfoRespository.insert(empInfo);
+		empInfoRepository.insert(empInfo);
 		result.setCode(0);
 		result.setMessage(new SystemMessage(MessageId.MBI1004).getMessage());
 		return result;

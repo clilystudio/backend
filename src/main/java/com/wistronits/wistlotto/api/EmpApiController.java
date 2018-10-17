@@ -49,8 +49,8 @@ public class EmpApiController {
 	
 	@PostMapping("/edit")
 	public CommonResultModel editEmp(@RequestBody TEmpInfo empInfo) {
-		// 处理"/emp/add"的POST请求，用来添加员工
-		return empService.addEmp(empInfo);
+		// 处理"/emp/edit"的POST请求，用来编辑员工
+		return empService.editEmp(empInfo);
 	}
 	
 	@GetMapping("/lotto/{prizeId}")
