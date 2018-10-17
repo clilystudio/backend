@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +33,12 @@ public class EmpApiController {
 	public List<TEmpInfo> getList() {
 		// 处理"/emp/list"的GET请求，用来获取员工列表
 		return empService.getEmpList();
+	}
+	
+	@PostMapping("/add")
+	public CommonResultModel addEmps(@RequestBody TEmpInfo empInfo) {
+		// 处理"/emp/add"的POST请求，用来添加员工
+		return empService.addEmp(empInfo);
 	}
 	
 	@PostMapping("/delete")

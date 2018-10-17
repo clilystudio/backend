@@ -80,4 +80,19 @@ public class EmpService {
 		result.setMessage(new SystemMessage(MessageId.MBI1002).getMessage());
 		return result;
 	}
+	
+	public CommonResultModel addEmp(TEmpInfo empInfo) {
+		CommonResultModel result = new CommonResultModel();
+		TEmpInfoKey key = new TEmpInfoKey();
+		key.setEmpId(empInfo.getEmpId());
+		if (empInfoRespository.selectByPrimaryKey(empInfo) != null) {
+			result.setCode(1);
+			result.setMessage(new SystemMessage(MessageId.MBE1005).getMessage());
+			return result;
+		}
+		empInfoRespository.insert(empInfo);
+		result.setCode(0);
+		result.setMessage(new SystemMessage(MessageId.MBI1003).getMessage());
+		return result;
+	}
 }
