@@ -36,7 +36,7 @@ public class EmpApiController {
 	}
 	
 	@PostMapping("/add")
-	public CommonResultModel addEmps(@RequestBody TEmpInfo empInfo) {
+	public CommonResultModel addEmp(@RequestBody TEmpInfo empInfo) {
 		// 处理"/emp/add"的POST请求，用来添加员工
 		return empService.addEmp(empInfo);
 	}
@@ -45,6 +45,12 @@ public class EmpApiController {
 	public CommonResultModel deleteEmps(@RequestBody String[] empIds) {
 		// 处理"/emp/delete"的POST请求，用来删除指定ID的员工
 		return empService.deleteEmps(empIds);
+	}
+	
+	@PostMapping("/edit")
+	public CommonResultModel editEmp(@RequestBody TEmpInfo empInfo) {
+		// 处理"/emp/add"的POST请求，用来添加员工
+		return empService.addEmp(empInfo);
 	}
 	
 	@GetMapping("/lotto/{prizeId}")

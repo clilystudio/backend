@@ -95,4 +95,17 @@ public class EmpService {
 		result.setMessage(new SystemMessage(MessageId.MBI1003).getMessage());
 		return result;
 	}
+	
+	public CommonResultModel editEmp(TEmpInfo empInfo) {
+		CommonResultModel result = new CommonResultModel();
+		if (empInfoRespository.updateByPrimaryKey(empInfo) == 0) {
+			result.setCode(1);
+			result.setMessage(new SystemMessage(MessageId.MBE1006).getMessage());
+			return result;
+		}
+		empInfoRespository.insert(empInfo);
+		result.setCode(0);
+		result.setMessage(new SystemMessage(MessageId.MBI1004).getMessage());
+		return result;
+	}
 }
