@@ -18,6 +18,7 @@ import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
 import com.wistronits.wistlotto.framework.util.ConverterUtil;
 import com.wistronits.wistlotto.framework.util.CsvUtil;
+import com.wistronits.wistlotto.repository.LottoRepository;
 import com.wistronits.wistlotto.repository.tables.TEmpInfoRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +30,15 @@ public class EmpService {
 	@Inject
 	private TEmpInfoRepository empInfoRepository;
 	
+	@Inject
+	private LottoRepository lottoRepository;
+	
 	
 	// 获取全部奖项列表
-	public List<TEmpInfo> getEmpList() {
-		TEmpInfoCriteria example = new TEmpInfoCriteria();
-		example.setOrderByClause("emp_id asc");
-		return empInfoRepository.selectByExample(example);
+	public List<EmpInfoModel> getEmpList() {
+		return lottoRepository.getEmpList();
 	}
+	
 	// 获取全部奖项列表
 	public List<TEmpInfo> getLottoEmp(final String prizeId) {
 		return null;

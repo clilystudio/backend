@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
 import com.wistronits.wistlotto.model.CommonResultModel;
+import com.wistronits.wistlotto.model.EmpInfoModel;
 import com.wistronits.wistlotto.model.UploadCSVModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.service.EmpService;
@@ -30,7 +31,7 @@ public class EmpApiController {
 	private EmpService empService;
 	
 	@GetMapping("/list")
-	public List<TEmpInfo> getList() {
+	public List<EmpInfoModel> getList() {
 		// 处理"/emp/list"的GET请求，用来获取员工列表
 		return empService.getEmpList();
 	}

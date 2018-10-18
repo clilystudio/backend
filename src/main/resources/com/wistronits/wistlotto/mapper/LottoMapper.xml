@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wistronits.wistlotto.repository.LottoRepository">
+  <resultMap id="EmpInfoMap" type="com.wistronits.wistlotto.model.EmpInfoModel">
+    <id column="emp_id" jdbcType="VARCHAR" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="emp_rate" jdbcType="INTEGER" property="empRate" />
+    <result column="prize_flag" jdbcType="INTEGER" property="prizeFlag" />
+  </resultMap>
+  <sql id="EmpInfo_Column_List">
+    a.emp_id, a.emp_name, a.dept_id, b.dept_name, a.emp_rate, a.prize_flag
+  </sql>
+  <select id="getEmpList" resultMap="EmpInfoMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="EmpInfo_Column_List" />
+    from t_emp_info a inner join t_dept_info b on a.dept_id = b.dept_id
+  </select>
+</mapper>

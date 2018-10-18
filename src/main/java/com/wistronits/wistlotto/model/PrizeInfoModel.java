@@ -23,15 +23,18 @@ public class PrizeInfoModel implements Serializable {
 	
     @Parsed(index = 2)
 	private String prizeDesc;
-	
+    
     @Parsed(index = 3)
-	private BigDecimal prizeNumber;
+	private BigDecimal prizeOrder;
 	
     @Parsed(index = 4)
-	private BigDecimal prizeWinner;
+	private BigDecimal prizeNumber;
 	
     @Parsed(index = 5)
-	private String empDeptno;
+	private BigDecimal prizeWinner;
+	
+    @Parsed(index = 6)
+	private String deptId;
 	
     @Parsed(index = 6)
 	private BigDecimal prizeMulti;

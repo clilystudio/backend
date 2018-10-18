@@ -19,23 +19,16 @@ public class EmpInfoModel implements Serializable {
     private String empId;
     
     @Parsed(index = 1)
-    private String empCname;
+    private String empName;
     
     @Parsed(index = 2)
-    private String empFname;
+    private String deptId;
     
     @Parsed(index = 3)
-    private String empLname;
-    
-    @Parsed(index = 4)
-    private String empDeptno;
-    
-    @Parsed(index = 5)
-    private String empDeptname;
-    
-    @Parsed(index = 6)
     private BigDecimal empRate;
     
-    @Parsed(index = 7)
+    @Parsed(index = 4)
     private BigDecimal prizeFlag;
+    
+    private String deptName;
 }
