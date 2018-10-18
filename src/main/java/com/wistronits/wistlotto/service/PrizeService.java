@@ -102,7 +102,6 @@ public class PrizeService {
 			result.setMessage(new SystemMessage(MessageId.MBE1006).getMessage());
 			return result;
 		}
-		prizeInfoRepository.insert(prizeInfo);
 		result.setCode(0);
 		result.setMessage(new SystemMessage(MessageId.MBI1004).getMessage());
 		return result;
