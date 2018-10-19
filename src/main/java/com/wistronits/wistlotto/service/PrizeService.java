@@ -31,7 +31,7 @@ public class PrizeService {
 	// 获取全部奖项列表
 	public List<TPrizeInfo> getPrizeList() {
 		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
-		example.setOrderByClause("prize_id asc");
+		example.setOrderByClause("prize_order asc");
 		return prizeInfoRepository.selectByExample(example);
 	}
 	
@@ -96,6 +96,7 @@ public class PrizeService {
 	}
 	
 	public CommonResultModel editPrize(TPrizeInfo prizeInfo) {
+		log.debug("editPrize:" + prizeInfo);
 		CommonResultModel result = new CommonResultModel();
 		if (prizeInfoRepository.updateByPrimaryKey(prizeInfo) == 0) {
 			result.setCode(1);

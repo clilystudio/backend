@@ -36,6 +36,6 @@ public class PrizeInfoModel implements Serializable {
     @Parsed(index = 6)
 	private String deptId;
 	
-    @Parsed(index = 6)
+    @Parsed(index = 7)
 	private BigDecimal prizeMulti;
 }
