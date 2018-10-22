@@ -742,6 +742,66 @@ public class TPrizeInfoCriteria {
 			addCriterion("prize_status not between", value1, value2, "prizeStatus");
 			return (Criteria) this;
 		}
+
+		public Criteria andPrizePersonIsNull() {
+			addCriterion("prize_person is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonIsNotNull() {
+			addCriterion("prize_person is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonEqualTo(BigDecimal value) {
+			addCriterion("prize_person =", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonNotEqualTo(BigDecimal value) {
+			addCriterion("prize_person <>", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonGreaterThan(BigDecimal value) {
+			addCriterion("prize_person >", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonGreaterThanOrEqualTo(BigDecimal value) {
+			addCriterion("prize_person >=", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonLessThan(BigDecimal value) {
+			addCriterion("prize_person <", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonLessThanOrEqualTo(BigDecimal value) {
+			addCriterion("prize_person <=", value, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonIn(List<BigDecimal> values) {
+			addCriterion("prize_person in", values, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonNotIn(List<BigDecimal> values) {
+			addCriterion("prize_person not in", values, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonBetween(BigDecimal value1, BigDecimal value2) {
+			addCriterion("prize_person between", value1, value2, "prizePerson");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrizePersonNotBetween(BigDecimal value1, BigDecimal value2) {
+			addCriterion("prize_person not between", value1, value2, "prizePerson");
+			return (Criteria) this;
+		}
 	}
 
 	/**

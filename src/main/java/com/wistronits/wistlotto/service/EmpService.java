@@ -59,7 +59,7 @@ public class EmpService {
 			CsvUtil.loadFile(file, processor);
 			List<EmpInfoModel> empAllInfo = processor.getBeans();
 			for (EmpInfoModel empInfoModel : empAllInfo) {
-				TEmpInfo empInfo = ConverterUtil.convertObject(empInfoModel, TEmpInfo.class);
+				TEmpInfo empInfo = ConverterUtil.convertObject(empInfoModel, TEmpInfo.class);				
 				empInfoRepository.insert(empInfo);
 			}
 			result.setCode(0);

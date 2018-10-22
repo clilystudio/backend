@@ -1,5 +1,6 @@
 package com.wistronits.wistlotto.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
 import com.wistronits.wistlotto.framework.util.ConverterUtil;
 import com.wistronits.wistlotto.framework.util.CsvUtil;
+import com.wistronits.wistlotto.model.CommonConst;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.tables.TPrizeInfo;
@@ -51,6 +53,8 @@ public class PrizeService {
 			List<PrizeInfoModel> prizeAllInfo = processor.getBeans();
 			for (PrizeInfoModel prizeInfoModel : prizeAllInfo) {
 				TPrizeInfo prizeInfo = ConverterUtil.convertObject(prizeInfoModel, TPrizeInfo.class);
+				prizeInfo.setPrizeStatus(CommonConst.STATUS_READY);
+				prizeInfo.setPrizePerson(BigDecimal.ONE);
 				prizeInfoRepository.insert(prizeInfo);
 			}
 			result.setCode(0);

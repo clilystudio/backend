@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS t_prize_info (
     prize_winner INTEGER NOT NULL,                              -- 中奖人数
     dept_id TEXT,                                               -- 限定部门ID（为空时，不限定）
     prize_multi INTEGER NOT NULL,                               -- 是否允许重复中奖（0为不允许，1为允许）
-    prize_status INTEGER NOT NULL                               -- 奖项状态（0为待抽选，1为抽选中，2为抽选结束）
+    prize_status INTEGER NOT NULL,                              -- 奖项状态（0为待抽选，1为抽选中，2为抽选结束）
+    prize_person INTEGER NOT NULL                               -- 抽选人数
 );
 
 -- 中奖表

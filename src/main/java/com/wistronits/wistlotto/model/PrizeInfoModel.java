@@ -38,4 +38,8 @@ public class PrizeInfoModel implements Serializable {
 	
     @Parsed(index = 7)
 	private BigDecimal prizeMulti;
+    
+	private BigDecimal prizeStatus;
+	
+	private BigDecimal prizePerson;
 }
