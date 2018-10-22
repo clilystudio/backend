@@ -33,7 +33,7 @@ public class PrizeService {
 	// 获取全部奖项列表
 	public List<TPrizeInfo> getPrizeList() {
 		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
-		example.setOrderByClause("prize_order asc");
+		example.setOrderByClause("prize_status asc, prize_order asc");
 		return prizeInfoRepository.selectByExample(example);
 	}
 	
