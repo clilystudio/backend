@@ -49,7 +49,6 @@ public class ConverterUtil {
     }
 
     public static <T> T convertFromJSONToApp(String json, Class<T> clazz) throws IOException {
-        // 変換を行う。
         T v = null;
         try {
             v = objectMapper.readValue(json, clazz);
