@@ -4,8 +4,10 @@
   <resultMap id="EmpInfoMap" type="com.wistronits.wistlotto.model.EmpInfoModel">
     <id column="emp_id" jdbcType="VARCHAR" property="empId" />
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="emp_sex" jdbcType="VARCHAR" property="empSex" />
     <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="branch_id" jdbcType="VARCHAR" property="branchId" />
     <result column="emp_rate" jdbcType="INTEGER" property="empRate" />
     <result column="prize_flag" jdbcType="VARCHAR" property="prizeFlag" />
   </resultMap>
@@ -29,7 +31,7 @@
     <result column="prize_status" jdbcType="VARCHAR" property="prizeStatus" />
   </resultMap>
   <sql id="EmpInfo_Column_List">
-    a.emp_id, a.emp_name, a.dept_id, b.dept_name, a.emp_rate, a.prize_flag
+    a.emp_id, a.emp_name, a.emp_sex, a.dept_id, b.dept_name, b.branch_id, a.emp_rate, a.prize_flag
   </sql>
   <sql id="WinnerInfo_Column_List">
 	c.prize_id, c.prize_name, c.prize_desc, b.emp_id, b.emp_name, a.win_time

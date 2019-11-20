@@ -16,7 +16,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.wistronits'
-version = '2.0.19'
+version = '2.0.20'
 sourceCompatibility = 1.8
 
 repositories {

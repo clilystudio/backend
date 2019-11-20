@@ -28,20 +28,27 @@ public class EmpInfoModel implements Serializable {
 	@Parsed(index = 1)
 	private String empName;
 
-	// 部门ID
+	// 员工性别
 	@Parsed(index = 2)
+	private String empSex;
+
+	// 部门ID
+	@Parsed(index = 3)
 	private String deptId;
 
-	// 部门名称
-	@Parsed(index = 3)
+	// 中奖权值
+	@Parsed(index = 4)
 	private BigDecimal empRate;
 
 	// 中奖标识
-	@Parsed(index = 4)
+	@Parsed(index = 5)
 	private String prizeFlag;
 
 	// 部门名称
 	private String deptName;
+
+	// 科室ID
+	private String branchId;
 
 	// 显示顺序
 	private BigDecimal order;
