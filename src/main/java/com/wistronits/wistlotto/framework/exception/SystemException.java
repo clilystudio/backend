@@ -6,37 +6,37 @@ import java.util.List;
 import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
 
+/**
+ * 系统异常
+ * 
+ * @author 盛广立 2019年1月16日
+ */
 public class SystemException extends RuntimeException {
 
-    /**
-     * シリアルバージョン。
-     */
-    private static final long serialVersionUID = 2675145706532175756L;
+	private static final long serialVersionUID = 2675145706532175756L;
 
-    /**
-     * メッセージのリスト。
-     */
-    private List<SystemMessage> messages;
+	// 消息一览
+	private List<SystemMessage> messages;
 
-    /**
-     * 本来起きてはいけない例外をキャッチして、エラーにするときのコンストラクタ。
-     *
-     * @param cause スローされた例外
-     * @param messageId メッセージID
-     * @param args 動的にメッセージに表示する値。なければ null を指定。
-     */
-    public SystemException(Throwable cause, MessageId messageId, Object... args) {
-        super(cause);
-        this.messages = new ArrayList<SystemMessage>();
-        this.messages.add(new SystemMessage(messageId, args));
-    }
+	/**
+	 * 构造器
+	 *
+	 * @param cause     异常
+	 * @param messageId 消息ID
+	 * @param args      消息参数
+	 */
+	public SystemException(Throwable cause, MessageId messageId, Object... args) {
+		super(cause);
+		this.messages = new ArrayList<SystemMessage>();
+		this.messages.add(new SystemMessage(messageId, args));
+	}
 
-    /**
-     * メッセージを返す。
-     *
-     * @return メッセージ
-     */
-    public List<SystemMessage> getMessages() {
-        return messages;
-    }
+	/**
+	 * 错误消息取得
+	 *
+	 * @return 错误消息
+	 */
+	public List<SystemMessage> getMessages() {
+		return messages;
+	}
 }

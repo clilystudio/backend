@@ -1,5 +1,10 @@
 package com.wistronits.wistlotto.framework.message;
 
+/**
+ * 消息ID定义
+ * @author 盛广立
+ * 2019年1月16日
+ */
 public enum MessageId {
 	/** 出现未知系统错误，请查看日志获取更多内容。 */
 	MSE0001("MSE0001"),
@@ -21,6 +26,16 @@ public enum MessageId {
 	MBE1005("MBE1005"),
 	/** 要编辑的员工数据不存在。 */
 	MBE1006("MBE1006"),
+	/** 奖项ID不能有重复。 */
+	MBE1007("MBE1007"),
+	/** 要编辑的奖项数据不存在。 */
+	MBE1008("MBE1008"),
+	/** 系统KEY不能有重复。 */
+	MBE1009("MBE1009"),
+	/** 要编辑的系统配置不存在。 */
+	MBE1010("MBE1010"),
+	/** 要中奖的奖项不存在。 */
+	MBE1011("MBE1011"),
 	/** 确定{0}是要放弃中奖吗？ */
 	MBW0001("MBW0001"),
 	/** 奖项{0}共{1}次中奖机会，现在抽选{2}名中奖者。 */
@@ -34,16 +49,27 @@ public enum MessageId {
 	/** 员工数据添加成功。 */
 	MBI1003("MBI1003"),
 	/** 员工数据编辑成功。 */
-	MBI1004("MBI1004");
+	MBI1004("MBI1004"),
+	/** 奖项数据删除成功。 */
+	MBI1005("MBI1005"),
+	/** 奖项数据添加成功。 */
+	MBI1006("MBI1006"),
+	/** 奖项数据编辑成功。 */
+	MBI1007("MBI1007"),
+	/** 系统设置更新成功。 */
+	MBI1008("MBI1008"),
+	/** 中奖信息设置成功。 */
+	MBI1009("MBI1009");
 
-    /** 消息ID。 */
-    private String id;
+	/** 消息ID。 */
+	private String id;
 
-    MessageId(String id) {
-        this.id = id;
-    }
-    @Override
-    public String toString() {
-        return this.id;
-    }
+	MessageId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return this.id;
+	}
 }

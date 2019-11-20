@@ -7,17 +7,26 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
+/**
+ * 控制信息
+ * 
+ * @author 盛广立 2019年1月11日
+ */
 @Data
 @Component
 public class ControlInfoModel implements Serializable {
 
 	private static final long serialVersionUID = 8356420659067929244L;
-	
-    private String prizeId;
-    
-	private BigDecimal prizeStatus;
-	
+
+	// 奖项ID
+	private String prizeId;
+
+	// 奖项状态
+	private String prizeStatus;
+
+	// 抽选人数
 	private BigDecimal prizePerson;
 
-	private BigDecimal prizeCommand;
+	// 控制指令
+	private String command;
 }

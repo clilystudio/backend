@@ -21,6 +21,11 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * MVC配置类
+ * 
+ * @author 盛广立 2019年1月11日
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
@@ -70,19 +75,16 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		// TODO Auto-generated method stub
 		WebMvcConfigurer.super.addCorsMappings(registry);
-		registry.addMapping("/**")
-        .allowedOrigins("*")
-        .allowCredentials(true)
-        .allowedMethods("GET","POST", "PUT", "DELETE")
-        .allowedHeaders("*");
+		registry.addMapping("/**").allowedOrigins("*").allowCredentials(true)
+				.allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
 	}
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		WebMvcConfigurer.super.addViewControllers(registry);
-        registry.addViewController("/manage").setViewName("manage");
-        registry.addViewController("/control").setViewName("control");
-        registry.addViewController("/").setViewName("lotto");
+		registry.addViewController("/manage").setViewName("manage");
+		registry.addViewController("/control").setViewName("control");
+		registry.addViewController("/").setViewName("lotto");
 	}
 
 	@Override

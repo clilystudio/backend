@@ -9,37 +9,49 @@ import com.univocity.parsers.annotations.Parsed;
 
 import lombok.Data;
 
+/**
+ * 奖项信息
+ * 
+ * @author 盛广立 2019年1月11日
+ */
 @Data
 @Component
 public class PrizeInfoModel implements Serializable {
 
 	private static final long serialVersionUID = 9105649530988543585L;
-	
-    @Parsed(index = 0)
-    private String prizeId;
 
-    @Parsed(index = 1)
+	// 奖项ID
+	@Parsed(index = 0)
+	private String prizeId;
+
+	// 奖项名称
+	@Parsed(index = 1)
 	private String prizeName;
-	
-    @Parsed(index = 2)
+
+	// 奖项描述
+	@Parsed(index = 2)
 	private String prizeDesc;
-    
-    @Parsed(index = 3)
+
+	// 抽取顺序
+	@Parsed(index = 3)
 	private BigDecimal prizeOrder;
-	
-    @Parsed(index = 4)
+
+	// 奖品数量
+	@Parsed(index = 4)
 	private BigDecimal prizeNumber;
-	
-    @Parsed(index = 5)
+
+	// 已中奖数量
+	@Parsed(index = 5)
 	private BigDecimal prizeWinner;
-	
-    @Parsed(index = 6)
+
+	// 限定部门ID
+	@Parsed(index = 6)
 	private String deptId;
-	
-    @Parsed(index = 7)
-	private BigDecimal prizeMulti;
-    
-	private BigDecimal prizeStatus;
-	
-	private BigDecimal prizePerson;
+
+	// 允许重复中奖
+	@Parsed(index = 7)
+	private String prizeMulti;
+
+	// 奖项状态
+	private String prizeStatus;
 }

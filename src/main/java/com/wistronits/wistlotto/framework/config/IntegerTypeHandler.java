@@ -11,6 +11,11 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.TypeException;
 
+/**
+ * Mybatis生成代码时，INTEGER类型转换为BigDecimal
+ * @author 盛广立
+ * 2019年1月16日
+ */
 @MappedJdbcTypes(JdbcType.INTEGER)
 public class IntegerTypeHandler extends BaseTypeHandler<BigDecimal> {
 

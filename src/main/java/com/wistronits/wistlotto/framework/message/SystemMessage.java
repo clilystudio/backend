@@ -9,33 +9,38 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
+/**
+ * 系统消息
+ * @author 盛广立
+ * 2019年1月16日
+ */
 @Data
 @Component
 public class SystemMessage {
 
-    private static MessageSource messageSource;
+	private static MessageSource messageSource;
 
-    @Inject
-    public void setMessageSource(MessageSource messageSource) {
-    	SystemMessage.messageSource = messageSource;
-    }
+	@Inject
+	public void setMessageSource(MessageSource messageSource) {
+		SystemMessage.messageSource = messageSource;
+	}
 
-    private MessageId id;
+	private MessageId id;
 
-    private Object[] args;
+	private Object[] args;
 
-    @SuppressWarnings("unused")
-    private SystemMessage() {
-        // NOP for injection only.
-    }
+	@SuppressWarnings("unused")
+	private SystemMessage() {
+		// NOP for injection only.
+	}
 
-    public SystemMessage(MessageId id, Object... args) {
-        this.id = id;
-        this.args = args;
-    }
+	public SystemMessage(MessageId id, Object... args) {
+		this.id = id;
+		this.args = args;
+	}
 
-    public String getMessage() {
-        return messageSource.getMessage(id.toString(), args, Locale.CHINA);
-    }
+	public String getMessage() {
+		return messageSource.getMessage(id.toString(), args, Locale.CHINA);
+	}
 
 }

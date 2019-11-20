@@ -7,10 +7,36 @@
     <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
     <result column="emp_rate" jdbcType="INTEGER" property="empRate" />
-    <result column="prize_flag" jdbcType="INTEGER" property="prizeFlag" />
+    <result column="prize_flag" jdbcType="VARCHAR" property="prizeFlag" />
+  </resultMap>
+  <resultMap id="WinnerInfoMap" type="com.wistronits.wistlotto.model.WinnerInfoModel">
+    <result column="prize_id" jdbcType="VARCHAR" property="prizeId" />
+    <result column="prize_name" jdbcType="VARCHAR" property="prizeName" />
+    <result column="prize_desc" jdbcType="VARCHAR" property="prizeDesc" />
+    <result column="emp_id" jdbcType="VARCHAR" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="win_time" jdbcType="VARCHAR" property="winTime" />
+  </resultMap>
+  <resultMap id="PrizeInfoMap" type="com.wistronits.wistlotto.model.tables.TPrizeInfo">
+    <id column="prize_id" jdbcType="VARCHAR" property="prizeId" />
+    <result column="prize_name" jdbcType="VARCHAR" property="prizeName" />
+    <result column="prize_desc" jdbcType="VARCHAR" property="prizeDesc" />
+    <result column="prize_order" jdbcType="INTEGER" property="prizeOrder" />
+    <result column="prize_number" jdbcType="INTEGER" property="prizeNumber" />
+    <result column="prize_winner" jdbcType="INTEGER" property="prizeWinner" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="prize_multi" jdbcType="VARCHAR" property="prizeMulti" />
+    <result column="prize_status" jdbcType="VARCHAR" property="prizeStatus" />
   </resultMap>
   <sql id="EmpInfo_Column_List">
     a.emp_id, a.emp_name, a.dept_id, b.dept_name, a.emp_rate, a.prize_flag
+  </sql>
+  <sql id="WinnerInfo_Column_List">
+	c.prize_id, c.prize_name, c.prize_desc, b.emp_id, b.emp_name, a.win_time
+  </sql>
+  <sql id="PrizeInfo_Column_List">
+    prize_id, prize_name, prize_desc, prize_order, prize_number, prize_winner, dept_id, 
+    prize_multi, prize_status
   </sql>
   <select id="getEmpList" resultMap="EmpInfoMap">
     select
@@ -20,5 +46,26 @@
     'true' as QUERYID,
     <include refid="EmpInfo_Column_List" />
     from t_emp_info a inner join t_dept_info b on a.dept_id = b.dept_id
+  </select>
+  <select id="getWinnerInfoList" resultMap="WinnerInfoMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="WinnerInfo_Column_List" />
+    from t_win_info a inner join t_emp_info b on a.emp_id = b.emp_id inner join t_prize_info c on a.prize_id = c.prize_id
+    order by a.win_time desc, a.emp_id asc
+  </select>
+  <select id="getLottoPrize" resultMap="PrizeInfoMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="PrizeInfo_Column_List" />
+    from t_prize_info
+    where prize_number > prize_winner
+    order by prize_status desc, prize_order asc, prize_id desc
   </select>
 </mapper>

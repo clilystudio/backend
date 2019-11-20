@@ -10,7 +10,7 @@
     <result column="emp_name" jdbcType="VARCHAR" property="empName" />
     <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="emp_rate" jdbcType="INTEGER" property="empRate" />
-    <result column="prize_flag" jdbcType="INTEGER" property="prizeFlag" />
+    <result column="prize_flag" jdbcType="VARCHAR" property="prizeFlag" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -140,7 +140,7 @@
     insert into t_emp_info (emp_id, emp_name, dept_id, 
       emp_rate, prize_flag)
     values (#{empId,jdbcType=VARCHAR}, #{empName,jdbcType=VARCHAR}, #{deptId,jdbcType=VARCHAR}, 
-      #{empRate,jdbcType=INTEGER}, #{prizeFlag,jdbcType=INTEGER})
+      #{empRate,jdbcType=INTEGER}, #{prizeFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.wistronits.wistlotto.model.tables.TEmpInfo">
     <!--
@@ -179,7 +179,7 @@
         #{empRate,jdbcType=INTEGER},
       </if>
       <if test="prizeFlag != null">
-        #{prizeFlag,jdbcType=INTEGER},
+        #{prizeFlag,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -213,7 +213,7 @@
         emp_rate = #{record.empRate,jdbcType=INTEGER},
       </if>
       <if test="record.prizeFlag != null">
-        prize_flag = #{record.prizeFlag,jdbcType=INTEGER},
+        prize_flag = #{record.prizeFlag,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -230,7 +230,7 @@
       emp_name = #{record.empName,jdbcType=VARCHAR},
       dept_id = #{record.deptId,jdbcType=VARCHAR},
       emp_rate = #{record.empRate,jdbcType=INTEGER},
-      prize_flag = #{record.prizeFlag,jdbcType=INTEGER}
+      prize_flag = #{record.prizeFlag,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -252,7 +252,7 @@
         emp_rate = #{empRate,jdbcType=INTEGER},
       </if>
       <if test="prizeFlag != null">
-        prize_flag = #{prizeFlag,jdbcType=INTEGER},
+        prize_flag = #{prizeFlag,jdbcType=VARCHAR},
       </if>
     </set>
     where emp_id = #{empId,jdbcType=VARCHAR}
@@ -266,7 +266,7 @@
     set emp_name = #{empName,jdbcType=VARCHAR},
       dept_id = #{deptId,jdbcType=VARCHAR},
       emp_rate = #{empRate,jdbcType=INTEGER},
-      prize_flag = #{prizeFlag,jdbcType=INTEGER}
+      prize_flag = #{prizeFlag,jdbcType=VARCHAR}
     where emp_id = #{empId,jdbcType=VARCHAR}
   </update>
 </mapper>

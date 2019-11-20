@@ -10,7 +10,7 @@
   </appender>
   <appender name="APPLICATION_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-      <fileNamePattern>C:/wistlotto/application_%d{yyyyMMdd}_%i.log</fileNamePattern>
+      <fileNamePattern>C:/wistlotto/log/application_%d{yyyyMMdd}_%i.log</fileNamePattern>
       <maxFileSize>10MB</maxFileSize>
       <maxHistory>7</maxHistory>
     </rollingPolicy>
@@ -20,7 +20,7 @@
   </appender>
   <appender name="SQL_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-      <fileNamePattern>C:/wistlotto/sql_%d{yyyyMMdd}_%i.log</fileNamePattern>
+      <fileNamePattern>C:/wistlotto/log/sql_%d{yyyyMMdd}_%i.log</fileNamePattern>
       <maxFileSize>10MB</maxFileSize>
       <maxHistory>7</maxHistory>
     </rollingPolicy>
@@ -30,7 +30,7 @@
   </appender>
   <appender name="SPRING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-      <fileNamePattern>C:/wistlotto/spring_%d{yyyyMMdd}_%i.log</fileNamePattern>
+      <fileNamePattern>C:/wistlotto/log/spring_%d{yyyyMMdd}_%i.log</fileNamePattern>
       <maxFileSize>10MB</maxFileSize>
       <maxHistory>7</maxHistory>
     </rollingPolicy>

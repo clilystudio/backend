@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS t_emp_info (
     emp_name TEXT NOT NULL,                                     -- 员工姓名
     dept_id TEXT NOT NULL,                                      -- 员工所在部门ID
     emp_rate INTEGER,                                           -- 中奖权值（越大概率越高）
-    prize_flag INTEGER                                          -- 中奖标识（0为没中奖，1为已中奖，-1为已放弃）
+    prize_flag TEXT NOT NULL                                    -- 中奖标识（0为未中奖，1为已中奖，9为已放弃）
 );
 
 -- 奖项表
@@ -16,9 +16,8 @@ CREATE TABLE IF NOT EXISTS t_prize_info (
     prize_number INTEGER NOT NULL,                              -- 奖品数量
     prize_winner INTEGER NOT NULL,                              -- 中奖人数
     dept_id TEXT,                                               -- 限定部门ID（为空时，不限定）
-    prize_multi INTEGER NOT NULL,                               -- 是否允许重复中奖（0为不允许，1为允许）
-    prize_status INTEGER NOT NULL,                              -- 奖项状态（0为待抽选，1为抽选中，2为抽选结束）
-    prize_person INTEGER NOT NULL                               -- 抽选人数
+    prize_multi TEXT NOT NULL,                                  -- 是否允许重复中奖（0为不允许，1为允许）
+    prize_status TEXT NOT NULL                                  -- 奖项状态
 );
 
 -- 中奖表
@@ -43,8 +42,37 @@ CREATE TABLE IF NOT EXISTS t_sys_info (
 
 ------------------------------------------
 -- 初始化部门数据
-INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('ID010', '事业一部');
-INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('ID020', '事业二部');
-INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('ID030', '事业三部');
-INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('ID050', '业务发展支持部');
-INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('WD010', '行政管理部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('DC1032', '高科技业务二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('DC111', '开发一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('FC10C0', '共享服务中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('FC10C1', '人资服务课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('FC10C2', '行政服务课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('FC10C3', '资讯服务课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1000', '第一事业单位');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1001', '商务中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1010', '产品全球化交付中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1020', '高科技业务二部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1021', '高科技业务一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1022', '高科技业务二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1030', '高科技业务三部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1031', '高科技业务一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1032', '高科技业务二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1040', '新业务开发部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1041', '高科技业务一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1042', '高科技业务二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1043', '互联网业务课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1050', '大连交付中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1100', '业务一处');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1110', '大连开发中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1111', '开发一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1112', '开发二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1113', '技术支持课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1120', '高科技业务一部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1200', '业务二处');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1210', '大连BPO中心');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1211', 'BPO交付一课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1212', 'BPO交付二课');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1220', '业务一部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC1230', '业务二部');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('IC2001', '驻场');
+INSERT INTO t_dept_info (dept_id, dept_name) VALUES ('WF008', '大连出纳');

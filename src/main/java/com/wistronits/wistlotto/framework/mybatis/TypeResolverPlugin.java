@@ -10,28 +10,33 @@ import java.util.Properties;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 
+/**
+ * Mybatis类型解析插件
+ * @author 盛广立
+ * 2019年1月16日
+ */
 public class TypeResolverPlugin extends JavaTypeResolverDefaultImpl {
-    /**
-    *
-    * {@inheritDoc}
-    */
-   public void addConfigurationProperties(Properties properties) {
-       super.addConfigurationProperties(properties);
+	/**
+	 *
+	 * {@inheritDoc}
+	 */
+	public void addConfigurationProperties(Properties properties) {
+		super.addConfigurationProperties(properties);
 
-       // Integer -> BigDecimal
-       typeMap.put(Types.INTEGER, new JdbcTypeInformation("INTEGER", //$NON-NLS-1$
-               new FullyQualifiedJavaType(BigDecimal.class.getName())));
+		// Integer -> BigDecimal
+		typeMap.put(Types.INTEGER, new JdbcTypeInformation("INTEGER", //$NON-NLS-1$
+				new FullyQualifiedJavaType(BigDecimal.class.getName())));
 
-       // Date -> LocalDate
-       typeMap.put(Types.DATE, new JdbcTypeInformation("DATE", //$NON-NLS-1$
-               new FullyQualifiedJavaType(LocalDate.class.getName())));
+		// Date -> LocalDate
+		typeMap.put(Types.DATE, new JdbcTypeInformation("DATE", //$NON-NLS-1$
+				new FullyQualifiedJavaType(LocalDate.class.getName())));
 
-       // TimeStamp -> LocalDateTime
-       typeMap.put(Types.TIMESTAMP, new JdbcTypeInformation("TIMESTAMP", //$NON-NLS-1$
-               new FullyQualifiedJavaType(LocalDateTime.class.getName())));
+		// TimeStamp -> LocalDateTime
+		typeMap.put(Types.TIMESTAMP, new JdbcTypeInformation("TIMESTAMP", //$NON-NLS-1$
+				new FullyQualifiedJavaType(LocalDateTime.class.getName())));
 
-       // Time -> LocalTime
-       typeMap.put(Types.TIME, new JdbcTypeInformation("TIME", //$NON-NLS-1$
-               new FullyQualifiedJavaType(LocalTime.class.getName())));
-   }
+		// Time -> LocalTime
+		typeMap.put(Types.TIME, new JdbcTypeInformation("TIME", //$NON-NLS-1$
+				new FullyQualifiedJavaType(LocalTime.class.getName())));
+	}
 }

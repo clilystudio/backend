@@ -12,13 +12,26 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import com.wistronits.wistlotto.framework.exception.SystemException;
 import com.wistronits.wistlotto.framework.message.MessageId;
 
+/**
+ * CSV文件处理工具类
+ * 
+ * @author 盛广立 2019年1月11日
+ */
 public class CsvUtil {
+
+	/**
+	 * CSV文件载入
+	 * 
+	 * @param mpf       CSV文件
+	 * @param processor CSV处理器
+	 * @throws SystemException 系统异常
+	 */
 	public static void loadFile(MultipartFile mpf, RowProcessor processor) throws SystemException {
 		InputStream in = null;
 		try {
 			in = mpf.getInputStream();
 			CsvParserSettings settings = new CsvParserSettings();
-	        settings.setHeaderExtractionEnabled(true);
+			settings.setHeaderExtractionEnabled(true);
 			settings.getFormat().setLineSeparator("\n");
 			settings.setNormalizeLineEndingsWithinQuotes(false);
 			settings.setProcessor(processor);
