@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <!-- http://www.mybatis.org/generator/configreference/xmlconfig.html -->
 <generatorConfiguration>
-    <classPathEntry location="C:/dev/jdbc/sqlite-jdbc-3.25.2.jar" />
+    <classPathEntry location="C:/dev/jdbc/sqlite-jdbc-3.28.0.jar" />
     <context id="lotto" defaultModelType="hierarchical" targetRuntime="MyBatis3">
         <property name="javaFileEncoding" value="UTF-8" />
         <plugin type="com.wistronits.wistlotto.framework.mybatis.RenameMapperClassPlugin" />
@@ -17,7 +17,7 @@
         <commentGenerator>
             <property name="suppressDate" value="true" />
         </commentGenerator>
-        <jdbcConnection driverClass="org.sqlite.JDBC" connectionURL="jdbc:sqlite:/00.workspace/wistlotto/backend/bin/main/static/db/wistlotto.db" userId="" password="" />
+        <jdbcConnection driverClass="org.sqlite.JDBC" connectionURL="jdbc:sqlite:/workspace/wistlotto/backend/bin/main/static/db/wistlotto.db" userId="" password="" />
         <javaTypeResolver type="com.wistronits.wistlotto.framework.mybatis.TypeResolverPlugin">
             <property name="forceBigDecimals" value="true" />
         </javaTypeResolver>
