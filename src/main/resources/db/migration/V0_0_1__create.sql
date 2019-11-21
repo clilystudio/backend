@@ -1,8 +1,10 @@
 -- 员工
 CREATE TABLE IF NOT EXISTS t_emp_info (
     emp_id  TEXT NOT NULL PRIMARY KEY ASC,                      -- 员工ID（主键，不能重复）
+    group_id TEXT NOT NULL,                                     -- 抽奖组ID
     emp_name TEXT NOT NULL,                                     -- 员工姓名
     emp_sex TEXT NOT NULL,                                      -- 员工性别
+    emp_date TEXT NOT NULL,                                     -- 入职日期
     dept_id TEXT NOT NULL,                                      -- 员工所在部门ID
     emp_rate INTEGER,                                           -- 中奖权值（越大概率越高）
     prize_flag TEXT NOT NULL                                    -- 中奖标识（0为未中奖，1为已中奖，9为已放弃）
@@ -10,15 +12,17 @@ CREATE TABLE IF NOT EXISTS t_emp_info (
 
 -- 奖项表
 CREATE TABLE IF NOT EXISTS t_prize_info (
-    prize_id TEXT NOT NULL PRIMARY KEY ASC,                     -- 奖项ID（主键，不能重复）
+    prize_id TEXT NOT NULL,                                     -- 奖项ID
+    group_id TEXT NOT NULL,                                     -- 抽奖组ID（000000为不限定抽奖组）
+    prize_type TEXT NOT NULL,                                   -- 奖项类型（0为现金奖，1为实物奖）
     prize_name TEXT NOT NULL,                                   -- 奖项名称
     prize_desc TEXT NOT NULL,                                   -- 奖项描述
     prize_order INTEGER NOT NULL,                               -- 抽选顺序
     prize_number INTEGER NOT NULL,                              -- 奖项数量
     prize_winner INTEGER NOT NULL,                              -- 中奖人数
-    dept_id TEXT,                                               -- 限定部门ID（为空时，不限定）
     prize_multi TEXT NOT NULL,                                  -- 是否允许重复中奖（0为不允许，1为允许）
-    prize_status TEXT NOT NULL                                  -- 抽选状态
+    prize_status TEXT NOT NULL,                                 -- 抽选状态
+    CONSTRAINT pk_win_info UNIQUE (prize_id, group_id)          -- 唯一约束（同一奖项一个抽奖组只能出现一次）
 );
 
 -- 中奖表
@@ -33,7 +37,7 @@ CREATE TABLE IF NOT EXISTS t_win_info (
 CREATE TABLE IF NOT EXISTS t_dept_info (
     dept_id TEXT NOT NULL PRIMARY KEY ASC,                      -- 部门ID（主键，不能重复）
     dept_name TEXT NOT NULL,                                    -- 部门名称
-    branch_id TEXT NOT NULL                                     -- 科室ID
+    branch_id TEXT NOT NULL                                     -- 分处ID
 );
 
 -- 系统表

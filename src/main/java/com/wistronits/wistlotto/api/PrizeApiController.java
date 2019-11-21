@@ -56,9 +56,9 @@ public class PrizeApiController {
 	 * @param prizeId 奖项ID
 	 * @return 奖项信息
 	 */
-	@GetMapping("/get/{prizeId}")
-	public TPrizeInfo getPrize(@PathVariable String prizeId) {
-		return prizeService.getPrize(prizeId);
+	@GetMapping("/get/{prizeId}/{groupId}")
+	public TPrizeInfo getPrize(@PathVariable String prizeId, @PathVariable String groupId) {
+		return prizeService.getPrize(prizeId, groupId);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class PrizeApiController {
 				sysService.deleteValue(CommonConst.SysKey.KEY_LOTTO);
 			} else {
 				// 根据控制信息查找抽选奖项
-				TPrizeInfo controlPrizeInfo = prizeService.getPrize(controlInfo.getPrizeId());
+				TPrizeInfo controlPrizeInfo = prizeService.getPrize(controlInfo.getPrizeId(), controlInfo.getGroupId());
 				if (Objects.nonNull(controlPrizeInfo)) {
 					// TODO 奖项状态检查待完善
 					return controlPrizeInfo;

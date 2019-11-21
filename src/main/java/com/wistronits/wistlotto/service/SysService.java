@@ -22,7 +22,6 @@ import com.wistronits.wistlotto.model.tables.TEmpInfoCriteria;
 import com.wistronits.wistlotto.model.tables.TEmpInfoKey;
 import com.wistronits.wistlotto.model.tables.TPrizeInfo;
 import com.wistronits.wistlotto.model.tables.TPrizeInfoCriteria;
-import com.wistronits.wistlotto.model.tables.TPrizeInfoKey;
 import com.wistronits.wistlotto.model.tables.TSysInfo;
 import com.wistronits.wistlotto.model.tables.TSysInfoCriteria;
 import com.wistronits.wistlotto.model.tables.TSysInfoKey;
@@ -62,6 +61,9 @@ public class SysService {
 	
 	@Inject
 	private SimpMessagingTemplate webSocket;
+	
+	@Inject
+	private PrizeService prizeService;
 
 	/**
 	 * 清除全部系统设置
@@ -157,9 +159,11 @@ public class SysService {
 		// 重置奖项信息
 		List<TPrizeInfo> prizeInfoList = prizeInfoRepository.selectByExample(new TPrizeInfoCriteria());
 		prizeInfoList.forEach(p -> {
+			TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+			example.createCriteria().andPrizeIdEqualTo(p.getPrizeId()).andGroupIdEqualTo(p.getGroupId());
 			p.setPrizeStatus(CommonConst.PrizeStatus.READYING);
 			p.setPrizeWinner(BigDecimal.ZERO);
-			prizeInfoRepository.updateByPrimaryKey(p);
+			prizeInfoRepository.updateByExample(p, example);
 		});
 
 		result.setCode(ResultCode.SUCCESS);
@@ -182,9 +186,7 @@ public class SysService {
 		List<TEmpInfo> empList = lottoInfo.getEmpList();
 
 		// 更新奖项信息
-		TPrizeInfoKey key = new TPrizeInfoKey();
-		key.setPrizeId(prizeId);
-		TPrizeInfo prizeInfo = prizeInfoRepository.selectByPrimaryKey(key);
+		TPrizeInfo prizeInfo = prizeService.getPrize(lottoInfo.getPrizeId(), lottoInfo.getGroupId());
 		if (Objects.nonNull(prizeInfo)) {
 			// 更新奖项信息
 			prizeInfo.setPrizeWinner(prizeInfo.getPrizeWinner().add(new BigDecimal(empList.size())));
@@ -195,7 +197,9 @@ public class SysService {
 				// 还有剩余奖项
 				prizeInfo.setPrizeStatus(CommonConst.PrizeStatus.STARTTED);
 			}
-			prizeInfoRepository.updateByPrimaryKey(prizeInfo);
+			TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+			example.createCriteria().andPrizeIdEqualTo(lottoInfo.getPrizeId()).andGroupIdEqualTo(lottoInfo.getGroupId());
+			prizeInfoRepository.updateByExample(prizeInfo, example);
 
 			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 			String winTime = sdf1.format(new Date(System.currentTimeMillis()));
@@ -235,9 +239,7 @@ public class SysService {
 		String empId = winnerInfo.getEmpId();
 
 		// 更新奖项信息
-		TPrizeInfoKey key = new TPrizeInfoKey();
-		key.setPrizeId(prizeId);
-		TPrizeInfo prizeInfo = prizeInfoRepository.selectByPrimaryKey(key);
+		TPrizeInfo prizeInfo = prizeService.getPrize(winnerInfo.getPrizeId(), winnerInfo.getGroupId());
 		if (Objects.nonNull(prizeInfo)) {
 			// 更新奖项信息
 			prizeInfo.setPrizeWinner(prizeInfo.getPrizeWinner().subtract(BigDecimal.ONE));
@@ -248,7 +250,9 @@ public class SysService {
 				// 还有剩余奖项
 				prizeInfo.setPrizeStatus(CommonConst.PrizeStatus.STARTTED);
 			}
-			prizeInfoRepository.updateByPrimaryKey(prizeInfo);
+			TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+			example.createCriteria().andPrizeIdEqualTo(winnerInfo.getPrizeId()).andGroupIdEqualTo(winnerInfo.getGroupId());
+			prizeInfoRepository.updateByExample(prizeInfo, example);
 
 			// 更新员工信息
 			TEmpInfoKey empKey = new TEmpInfoKey();
@@ -260,9 +264,9 @@ public class SysService {
 			}
 
 			// 删除中奖信息
-			TWinInfoCriteria example = new TWinInfoCriteria();
-			example.createCriteria().andEmpIdEqualTo(empId).andPrizeIdEqualTo(prizeId);
-			winInfoRepository.deleteByExample(example);
+			TWinInfoCriteria example2 = new TWinInfoCriteria();
+			example2.createCriteria().andEmpIdEqualTo(empId).andPrizeIdEqualTo(prizeId);
+			winInfoRepository.deleteByExample(example2);
 		}
 
 		CommonResultModel result = new CommonResultModel();

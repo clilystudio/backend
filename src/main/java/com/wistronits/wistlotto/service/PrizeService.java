@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +19,6 @@ import com.wistronits.wistlotto.model.CommonConst.ResultCode;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.tables.TPrizeInfo;
-import com.wistronits.wistlotto.model.tables.TPrizeInfoKey;
 import com.wistronits.wistlotto.model.tables.TPrizeInfoCriteria;
 import com.wistronits.wistlotto.repository.tables.TPrizeInfoRepository;
 
@@ -90,28 +88,34 @@ public class PrizeService {
 	 * 取得指定ID奖项信息
 	 * 
 	 * @param prizeId 奖项ID
+	 * @param groupId 抽奖组ID
 	 * @return 奖项信息
 	 */
-	public TPrizeInfo getPrize(String prizeId) {
+	public TPrizeInfo getPrize(String prizeId, String groupId) {
 		log.debug("###getPrize");
-		TPrizeInfoKey key = new TPrizeInfoKey();
-		key.setPrizeId(prizeId);
-		return prizeInfoRepository.selectByPrimaryKey(key);
+		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+		example.createCriteria().andPrizeIdEqualTo(prizeId).andGroupIdEqualTo(groupId);
+		List<TPrizeInfo> prizeInfoList = prizeInfoRepository.selectByExample(example);
+		if (prizeInfoList.size() > 0) {
+			return prizeInfoList.get(0);
+		}
+		return null;
 	}
 
 	/**
 	 * 删除指定ID奖项信息
 	 * 
-	 * @param prizeIds 奖项ID数组
+	 * @param prizeInfos 奖项ID数组
 	 * @return 删除结果
 	 */
 	public CommonResultModel deletePrizes(String[] prizeIds) {
 		log.debug("###deletePrizes");
 		CommonResultModel result = new CommonResultModel();
-		for (String prizeId : prizeIds) {
-			TPrizeInfoKey key = new TPrizeInfoKey();
-			key.setPrizeId(prizeId);
-			prizeInfoRepository.deleteByPrimaryKey(key);
+		for (String prizeInfo : prizeIds) {
+			String[] ids = prizeInfo.split("|");
+			TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+			example.createCriteria().andPrizeIdEqualTo(ids[0]).andGroupIdEqualTo(ids[1]);
+			prizeInfoRepository.deleteByExample(example);
 		}
 		result.setCode(ResultCode.SUCCESS);
 		result.setMessage(new SystemMessage(MessageId.MBI1005).getMessage());
@@ -127,19 +131,13 @@ public class PrizeService {
 	public CommonResultModel addPrize(TPrizeInfo prizeInfo) {
 		log.debug("###addPrize");
 		CommonResultModel result = new CommonResultModel();
-		TPrizeInfoKey key = new TPrizeInfoKey();
-		String prizeId = prizeInfo.getPrizeId();
-		key.setPrizeId(prizeId);
-		if (prizeInfoRepository.selectByPrimaryKey(key) != null) {
+		if (getPrize(prizeInfo.getPrizeId(), prizeInfo.getGroupId()) != null) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1007).getMessage());
 			return result;
 		}
-		if (StringUtils.startsWith(prizeId, "CS")) {
-			// 现金奖
-			String prizeDesc = prizeInfo.getPrizeDesc();
-			String deptId = RegExUtils.replaceAll(prizeDesc, "[^0-9]*([0-9]+)[^0-9]*", "$1");
-			prizeInfo.setDeptId(deptId);
+		if (StringUtils.isEmpty(prizeInfo.getGroupId())) {
+			prizeInfo.setGroupId(CommonConst.UNLIMIT_GROUP);
 		}
 		prizeInfoRepository.insert(prizeInfo);
 		result.setCode(ResultCode.SUCCESS);
@@ -156,13 +154,12 @@ public class PrizeService {
 	public CommonResultModel editPrize(TPrizeInfo prizeInfo) {
 		log.debug("###editPrize");
 		CommonResultModel result = new CommonResultModel();
-		if (StringUtils.startsWith(prizeInfo.getPrizeId(), "CS")) {
-			// 现金奖
-			String prizeDesc = prizeInfo.getPrizeDesc();
-			String deptId = RegExUtils.replaceAll(prizeDesc, "[^0-9]*([0-9]+)[^0-9]*", "$1");
-			prizeInfo.setDeptId(deptId);
+		if (StringUtils.isEmpty(prizeInfo.getGroupId())) {
+			prizeInfo.setGroupId(CommonConst.UNLIMIT_GROUP);
 		}
-		if (prizeInfoRepository.updateByPrimaryKey(prizeInfo) == 0) {
+		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
+		example.createCriteria().andPrizeIdEqualTo(prizeInfo.getPrizeId()).andGroupIdEqualTo(prizeInfo.getGroupId());
+		if (prizeInfoRepository.updateByExample(prizeInfo, example) == 0) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1008).getMessage());
 			return result;

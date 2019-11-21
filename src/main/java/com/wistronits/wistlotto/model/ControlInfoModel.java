@@ -20,6 +20,9 @@ public class ControlInfoModel implements Serializable {
 
 	// 奖项ID
 	private String prizeId;
+	
+	// 抽奖组ID
+	private String groupId;
 
 	// 奖项状态
 	private String prizeStatus;

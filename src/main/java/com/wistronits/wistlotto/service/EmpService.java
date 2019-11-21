@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,6 +70,11 @@ public class EmpService {
 			List<EmpInfoModel> empAllInfo = processor.getBeans();
 			for (EmpInfoModel empInfoModel : empAllInfo) {
 				TEmpInfo empInfo = ConverterUtil.convertObject(empInfoModel, TEmpInfo.class);
+				// 入职日期未输入时，根据员工ID生成
+				if (StringUtils.isEmpty(empInfo.getEmpDate())) {
+					String empDate = "20" + empInfo.getEmpId().substring(2, 6) + "01";
+					empInfo.setEmpDate(empDate);
+				}
 				empInfoRepository.insert(empInfo);
 			}
 			result.setCode(ResultCode.SUCCESS);
@@ -108,11 +114,17 @@ public class EmpService {
 	public CommonResultModel addEmp(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
 		TEmpInfoKey key = new TEmpInfoKey();
-		key.setEmpId(empInfo.getEmpId());
+		String empId = empInfo.getEmpId();
+		key.setEmpId(empId);
 		if (empInfoRepository.selectByPrimaryKey(empInfo) != null) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1005).getMessage());
 			return result;
+		}
+		// 入职日期未输入时，根据员工ID生成
+		if (StringUtils.isEmpty(empInfo.getEmpDate())) {
+			String empDate = "20" + empId.substring(2, 6) + "01";
+			empInfo.setEmpDate(empDate);
 		}
 		empInfoRepository.insert(empInfo);
 		result.setCode(ResultCode.SUCCESS);
@@ -128,6 +140,11 @@ public class EmpService {
 	 */
 	public CommonResultModel editEmp(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
+		// 入职日期未输入时，根据员工ID生成
+		if (StringUtils.isEmpty(empInfo.getEmpDate())) {
+			String empDate = "20" + empInfo.getEmpId().substring(2, 6) + "01";
+			empInfo.setEmpDate(empDate);
+		}
 		if (empInfoRepository.updateByPrimaryKey(empInfo) == 0) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1006).getMessage());

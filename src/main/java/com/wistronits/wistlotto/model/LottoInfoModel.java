@@ -22,6 +22,9 @@ public class LottoInfoModel implements Serializable {
 
 	// 奖项ID
 	private String prizeId;
+	
+	// 抽奖组ID
+	private String groupId;
 
 	// 中奖员工
 	private List<TEmpInfo> empList;
