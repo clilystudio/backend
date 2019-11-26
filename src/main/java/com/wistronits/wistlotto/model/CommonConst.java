@@ -45,6 +45,12 @@ public final class CommonConst {
 	
 	/** 不限定抽奖组 */
 	public static final String UNLIMIT_GROUP = "000000";
+
+	/** 分隔符 */
+	public static final class Delimiter {
+		public static final String GROUP = ";";
+		public static final String ITEM = "#";
+	}	
 	
 	public static final String END_POINT = "/lotto-stomp-endpoint";
 	

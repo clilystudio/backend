@@ -96,7 +96,7 @@ public class SysApiController {
 	/**
 	 * 获取抽选奖项信息
 	 */
-	@GetMapping("/lotto")
+	@GetMapping("/prize")
 	public PrizeInfoModel getLottoPrize() {
 		return sysService.getLottoPrize();
 	}

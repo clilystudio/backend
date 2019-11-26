@@ -205,10 +205,10 @@ public class SysService {
 				if (StringUtils.equalsIgnoreCase(prizeGroupInfo.getGroupId(), CommonConst.UNLIMIT_GROUP)
 						|| StringUtils.equalsIgnoreCase(prizeGroupInfo.getGroupId(), groupId)) {
 					if (prizeGroupInfo.getPrizeNumber().compareTo(prizeGroupInfo.getPrizeWinner()) <= 0) {
-						prizeGroupInfo.setPrizeWinner(prizeGroupInfo.getPrizeWinner().add(BigDecimal.ONE));
+						prizeGroupInfo.setPrizeNumber(prizeGroupInfo.getPrizeNumber().add(BigDecimal.ONE));
 						ungroupNum = ungroupNum.add(BigDecimal.ONE);
 					}
-					prizeGroupInfo.setPrizeNumber(prizeGroupInfo.getPrizeNumber().add(BigDecimal.ONE));
+					prizeGroupInfo.setPrizeWinner(prizeGroupInfo.getPrizeWinner().add(BigDecimal.ONE));
 					ungroup = false;
 					break;
 				}
@@ -254,7 +254,7 @@ public class SysService {
 			boolean isError = true;
 			for (TPrizeGroupInfo prizeGroupInfo : prizeGroupInfoList) {
 				if (prizeGroupInfo.getPrizeNumber().compareTo(prizeGroupInfo.getPrizeWinner()) > 0) {
-					prizeGroupInfo.setPrizeWinner(prizeGroupInfo.getPrizeWinner().subtract(BigDecimal.ONE));
+					prizeGroupInfo.setPrizeNumber(prizeGroupInfo.getPrizeNumber().subtract(BigDecimal.ONE));
 					ungroupNum = ungroupNum.subtract(BigDecimal.ONE);
 					isError = false;
 					break;
@@ -437,8 +437,7 @@ public class SysService {
 			} else {
 				// 根据控制信息查找抽选奖项
 				PrizeInfoModel controlPrizeInfo = prizeService.getPrize(controlInfo.getPrizeId());
-				if (Objects.nonNull(controlPrizeInfo)) {
-					// TODO 奖项状态检查待完善
+				if (Objects.nonNull(controlPrizeInfo) && controlPrizeInfo.getPrizeNumber().compareTo(controlPrizeInfo.getPrizeWinner()) > 0) {
 					return controlPrizeInfo;
 				}
 			}

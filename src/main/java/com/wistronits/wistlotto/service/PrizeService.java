@@ -3,6 +3,7 @@ package com.wistronits.wistlotto.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -73,12 +74,15 @@ public class PrizeService {
 	 * @return 奖项完整信息
 	 */
 	private PrizeInfoModel getPrizeInfoModel(TPrizeInfo prizeInfo) {
+		if (Objects.isNull(prizeInfo)) {
+			return null;
+		}
 		PrizeInfoModel prizeInfoModel = ConverterUtil.convertObject(prizeInfo, PrizeInfoModel.class);
-		
+
 		TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 		example.createCriteria().andPrizeIdEqualTo(prizeInfo.getPrizeId());
 		List<TPrizeGroupInfo> prizeGroupInfoList = prizeGroupInfoRepository.selectByExample(example);
-		String groupLimit = "";
+		StringBuilder sb = new StringBuilder();
 		BigDecimal prizeSumNumber = BigDecimal.ZERO;
 		BigDecimal prizeSumWinner = BigDecimal.ZERO;
 		for (TPrizeGroupInfo prizeGroupInfo : prizeGroupInfoList) {
@@ -86,8 +90,11 @@ public class PrizeService {
 			BigDecimal prizeWinner = prizeGroupInfo.getPrizeWinner();
 			prizeSumNumber = prizeSumNumber.add(prizeNumber);
 			prizeSumWinner = prizeSumWinner.add(prizeWinner);
-			groupLimit = groupLimit + prizeGroupInfo.getGroupId() + "," + prizeNumber.toPlainString() + "," + prizeWinner.toPlainString() + ";";
+			sb.append(prizeGroupInfo.getGroupId()).append(CommonConst.Delimiter.ITEM)
+					.append(prizeNumber.toPlainString()).append(CommonConst.Delimiter.ITEM)
+					.append(prizeWinner.toPlainString()).append(CommonConst.Delimiter.GROUP);
 		}
+		String groupLimit = sb.toString();
 		if (StringUtils.isNotEmpty(groupLimit)) {
 			groupLimit = StringUtils.left(groupLimit, groupLimit.length() - 1);
 		}
@@ -174,7 +181,7 @@ public class PrizeService {
 			TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 			example.createCriteria().andPrizeIdEqualTo(prizeId);
 			prizeGroupInfoRepository.deleteByExample(example);
-			
+
 			TPrizeInfoKey key = new TPrizeInfoKey();
 			key.setPrizeId(prizeId);
 			prizeInfoRepository.deleteByPrimaryKey(key);
@@ -194,7 +201,7 @@ public class PrizeService {
 		log.debug("###addPrize");
 		CommonResultModel result = new CommonResultModel();
 		String prizeId = prizeInfoModel.getPrizeId();
-		if (getPrize(prizeId) != null) {
+		if (Objects.nonNull(getPrize(prizeId))) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1007).getMessage());
 			return result;
@@ -206,19 +213,19 @@ public class PrizeService {
 		TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 		example.createCriteria().andPrizeIdEqualTo(prizeId);
 		prizeGroupInfoRepository.deleteByExample(example);
-		
+
 		String groupLimit = prizeInfoModel.getGroupLimit();
-		String[] prizeGroups = groupLimit.split(";");		
+		String[] prizeGroups = groupLimit.split(CommonConst.Delimiter.GROUP);
 		for (String prizeGroup : prizeGroups) {
-			String[] prizeGroupInfos = prizeGroup.split(",");			
+			String[] prizeGroupInfos = prizeGroup.split(CommonConst.Delimiter.ITEM);
 			TPrizeGroupInfo prizeGroupInfo = new TPrizeGroupInfo();
 			prizeGroupInfo.setPrizeId(prizeId);
 			prizeGroupInfo.setGroupId(prizeGroupInfos[0]);
 			prizeGroupInfo.setPrizeNumber(new BigDecimal(prizeGroupInfos[1]));
 			prizeGroupInfo.setPrizeWinner(BigDecimal.ZERO);
 			prizeGroupInfoRepository.insert(prizeGroupInfo);
-		}	
-		
+		}
+
 		result.setCode(ResultCode.SUCCESS);
 		result.setMessage(new SystemMessage(MessageId.MBI1006).getMessage());
 		return result;
