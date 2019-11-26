@@ -3,13 +3,13 @@
 <configuration>
   <settings>
     <setting name="mapUnderscoreToCamelCase" value="true" />
-    <setting name="callSettersOnNulls" value="true"/>
-    <setting name="returnInstanceForEmptyRow" value="true"/>
+    <setting name="callSettersOnNulls" value="true" />
+    <setting name="returnInstanceForEmptyRow" value="true" />
   </settings>
-	<typeAliases>
-		<package name="com.wistronits.wistlotto.domain.tables"/>
-	</typeAliases>
-	<typeHandlers>
-		<typeHandler handler="com.wistronits.wistlotto.framework.config.IntegerTypeHandler" />
-	</typeHandlers>
+  <typeAliases>
+    <package name="com.wistronits.wistlotto.domain.tables" />
+  </typeAliases>
+  <typeHandlers>
+    <typeHandler handler="com.wistronits.wistlotto.framework.config.IntegerTypeHandler" />
+  </typeHandlers>
 </configuration>

@@ -23,14 +23,10 @@
   </resultMap>
   <resultMap id="PrizeInfoMap" type="com.wistronits.wistlotto.model.tables.TPrizeInfo">
     <id column="prize_id" jdbcType="VARCHAR" property="prizeId" />
-    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
     <result column="prize_type" jdbcType="VARCHAR" property="prizeType" />
     <result column="prize_name" jdbcType="VARCHAR" property="prizeName" />
     <result column="prize_desc" jdbcType="VARCHAR" property="prizeDesc" />
     <result column="prize_order" jdbcType="INTEGER" property="prizeOrder" />
-    <result column="prize_number" jdbcType="INTEGER" property="prizeNumber" />
-    <result column="prize_winner" jdbcType="INTEGER" property="prizeWinner" />
-    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
     <result column="prize_multi" jdbcType="VARCHAR" property="prizeMulti" />
     <result column="prize_status" jdbcType="VARCHAR" property="prizeStatus" />
   </resultMap>
@@ -42,8 +38,7 @@
 	a.prize_id, b.prize_name, b.prize_desc, a.emp_id, c.group_id, c.emp_name, a.win_time
   </sql>
   <sql id="PrizeInfo_Column_List">
-    prize_id, group_id, prize_name, prize_desc, prize_order, prize_number, prize_winner, dept_id, 
-    prize_multi, prize_status
+    a.prize_id, a.prize_type, a.prize_name, a.prize_desc, a.prize_order, a.prize_multi, a.prize_status
   </sql>
   <select id="getEmpList" resultMap="EmpInfoMap">
     select
@@ -61,7 +56,7 @@
     </if>
     'true' as QUERYID,
     <include refid="WinnerInfo_Column_List" />
-    from t_win_info a inner join t_prize_info b on a.prize_id = b.prize_idinner join t_emp_info c on a.emp_id = c.emp_id 
+    from t_win_info a inner join t_prize_info b on a.prize_id = b.prize_id inner join t_emp_info c on a.emp_id = c.emp_id 
     order by a.win_time desc, a.emp_id asc
   </select>
   <select id="getLottoPrize" resultMap="PrizeInfoMap">
@@ -71,8 +66,17 @@
     </if>
     'true' as QUERYID,
     <include refid="PrizeInfo_Column_List" />
-    from t_prize_info
-    where prize_number > prize_winner
-    order by prize_status desc, prize_order asc, prize_id desc, group_id asc
+    from t_prize_info a inner join t_prize_group_info b on a.prize_id = b.prize_id
+    where b.prize_number > b.prize_winner
+    order by a.prize_status desc, a.prize_order asc, a.prize_id desc, b.group_id asc
   </select>
+  <update id="resetEmpInfo">
+  	update t_emp_info set prize_flag = '0'
+  </update>
+  <update id="resetPrizeInfo">
+  	update t_prize_info set prize_status = '1'
+  </update>
+  <update id="resetPrizeGroupInfo">
+  	update t_prize_group_info set prize_winner = 0
+  </update>
 </mapper>

@@ -24,34 +24,36 @@ public class PrizeInfoModel implements Serializable {
 	@Parsed(index = 0)
 	private String prizeId;
 
-	// 奖项名称
+	// 奖项类型
 	@Parsed(index = 1)
+	private String prizeType;
+
+	// 奖项名称
+	@Parsed(index = 2)
 	private String prizeName;
 
 	// 奖项描述
-	@Parsed(index = 2)
+	@Parsed(index = 3)
 	private String prizeDesc;
 
 	// 抽取顺序
-	@Parsed(index = 3)
+	@Parsed(index = 4)
 	private BigDecimal prizeOrder;
 
-	// 奖品数量
-	@Parsed(index = 4)
-	private BigDecimal prizeNumber;
-
-	// 已中奖数量
+	// 抽奖组限定
 	@Parsed(index = 5)
-	private BigDecimal prizeWinner;
-
-	// 限定部门ID
-	@Parsed(index = 6)
-	private String deptId;
+	private String groupLimit;
 
 	// 允许重复中奖
-	@Parsed(index = 7)
+	@Parsed(index = 6)
 	private String prizeMulti;
 
 	// 奖项状态
 	private String prizeStatus;
+	
+	// 奖品数量
+    private BigDecimal prizeNumber;
+    
+    // 已中奖数量
+    private BigDecimal prizeWinner;
 }

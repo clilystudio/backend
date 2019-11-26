@@ -1,7 +1,6 @@
 package com.wistronits.wistlotto.api;
 
 import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.LottoInfoModel;
+import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.WinnerInfoModel;
-import com.wistronits.wistlotto.model.tables.TPrizeInfo;
 import com.wistronits.wistlotto.model.tables.TSysInfo;
 import com.wistronits.wistlotto.service.SysService;
 
@@ -95,12 +94,10 @@ public class SysApiController {
 	}
 
 	/**
-	 * 取得可抽选奖项
-	 * 
-	 * @return 奖项信息
+	 * 获取抽选奖项信息
 	 */
-	@GetMapping("/prize")
-	public TPrizeInfo getLottoPrize() {
+	@GetMapping("/lotto")
+	public PrizeInfoModel getLottoPrize() {
 		return sysService.getLottoPrize();
 	}
 

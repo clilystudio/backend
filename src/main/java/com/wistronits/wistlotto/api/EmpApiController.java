@@ -42,6 +42,7 @@ public class EmpApiController {
 		int size = empList.size();
 		Random rnd = new Random(System.currentTimeMillis());
 		empList.forEach(e -> {
+			// 前端抽奖时乱序排列
 			BigDecimal order = new BigDecimal(10000).add(new BigDecimal(rnd.nextInt(size)));
 			e.setOrder(order);
 		});

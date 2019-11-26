@@ -34,4 +34,25 @@ public interface LottoRepository {
 	 * @return 奖项信息
 	 */
 	List<TPrizeInfo> getLottoPrize();
+
+	/**
+	 * 重置员工中奖标识
+	 * 
+	 * @return 更新件数
+	 */
+	int resetEmpInfo();
+
+	/**
+	 * 重置员工中奖标识
+	 * 
+	 * @return 更新件数
+	 */
+	int resetPrizeInfo();
+
+	/**
+	 * 重置员工中奖标识
+	 * 
+	 * @return 更新件数
+	 */
+	int resetPrizeGroupInfo();
 }
