@@ -1,6 +1,8 @@
 package com.wistronits.wistlotto.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -45,24 +47,32 @@ public class EmpService {
 	 * 
 	 * @return 员工一览
 	 */
-	public List<EmpInfoModel> getEmpList() {
+	public List<EmpInfoModel> getEmpList() {		
 		log.debug("获取员工一览");
-		return lottoRepository.getEmpList();
-	}
-
-	/**
-	 * 清除全部员工数据
-	 */
-	public void clearAll() {
-		log.debug("清除全部员工数据");
-		empInfoRepository.deleteByExample(new TEmpInfoCriteria());
+		List<EmpInfoModel> empList = lottoRepository.getEmpList();
+		int size = empList.size();
+		Random rnd = new Random(System.currentTimeMillis());
+		empList.forEach(e -> {
+			// 前端抽奖时乱序排列
+			BigDecimal order = new BigDecimal(10000).add(new BigDecimal(rnd.nextInt(size)));
+			e.setOrder(order);
+		});
+		return empList;
 	}
 
 	/**
 	 * 批量导入员工数据
+	 * 
+	 * @param file 员工信息CSV文件
+	 * @param isClearAll 是否清除现有员工信息
+	 * @return 批量导入结果
 	 */
-	public CommonResultModel uploadAll(MultipartFile file) {
+	public CommonResultModel uploadAll(MultipartFile file, boolean isClearAll) {
 		log.debug("批量导入员工数据");
+		if (isClearAll) {
+			// 清除全部员工数据
+			empInfoRepository.deleteByExample(new TEmpInfoCriteria());
+		}
 		BeanListProcessor<EmpInfoModel> processor = new BeanListProcessor<EmpInfoModel>(EmpInfoModel.class);
 		CommonResultModel result = new CommonResultModel();
 		try {
@@ -70,11 +80,7 @@ public class EmpService {
 			List<EmpInfoModel> empAllInfo = processor.getBeans();
 			for (EmpInfoModel empInfoModel : empAllInfo) {
 				TEmpInfo empInfo = ConverterUtil.convertObject(empInfoModel, TEmpInfo.class);
-				// 入职日期未输入时，根据员工ID生成
-				if (StringUtils.isEmpty(empInfo.getEmpDate())) {
-					String empDate = "20" + empInfo.getEmpId().substring(2, 6) + "01";
-					empInfo.setEmpDate(empDate);
-				}
+				setEmpDate(empInfo);
 				empInfoRepository.insert(empInfo);
 			}
 			result.setCode(ResultCode.SUCCESS);
@@ -121,11 +127,7 @@ public class EmpService {
 			result.setMessage(new SystemMessage(MessageId.MBE1005).getMessage());
 			return result;
 		}
-		// 入职日期未输入时，根据员工ID生成
-		if (StringUtils.isEmpty(empInfo.getEmpDate())) {
-			String empDate = "20" + empId.substring(2, 6) + "01";
-			empInfo.setEmpDate(empDate);
-		}
+		setEmpDate(empInfo);
 		empInfoRepository.insert(empInfo);
 		result.setCode(ResultCode.SUCCESS);
 		result.setMessage(new SystemMessage(MessageId.MBI1003).getMessage());
@@ -140,11 +142,7 @@ public class EmpService {
 	 */
 	public CommonResultModel editEmp(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
-		// 入职日期未输入时，根据员工ID生成
-		if (StringUtils.isEmpty(empInfo.getEmpDate())) {
-			String empDate = "20" + empInfo.getEmpId().substring(2, 6) + "01";
-			empInfo.setEmpDate(empDate);
-		}
+		setEmpDate(empInfo);
 		if (empInfoRepository.updateByPrimaryKey(empInfo) == 0) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1006).getMessage());
@@ -153,5 +151,18 @@ public class EmpService {
 		result.setCode(ResultCode.SUCCESS);
 		result.setMessage(new SystemMessage(MessageId.MBI1004).getMessage());
 		return result;
+	}
+
+	/**
+	 * 设置员工入职日期
+	 * 
+	 * @param empInfo 员工数据
+	 */
+	private void setEmpDate(TEmpInfo empInfo) {
+		// 入职日期未输入时，根据员工ID生成
+		if (StringUtils.isEmpty(empInfo.getEmpDate())) {
+			String empDate = "20" + empInfo.getEmpId().substring(2, 6) + "01";
+			empInfo.setEmpDate(empDate);
+		}
 	}
 }

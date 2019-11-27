@@ -15,7 +15,7 @@ import lombok.Data;
 public class UploadCSVModel {
 
 	// 清除标识
-	private boolean clearFlag;
+	private boolean clearAll;
 
 	// 数据文件
 	private MultipartFile file;

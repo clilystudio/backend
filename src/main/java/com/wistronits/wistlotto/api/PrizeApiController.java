@@ -90,11 +90,14 @@ public class PrizeApiController {
 	 */
 	@PostMapping("/upload")
 	public CommonResultModel uploadAll(@ModelAttribute UploadCSVModel model) {
-		CommonResultModel result = new CommonResultModel();
-		if (model.isClearFlag()) {
-			prizeService.clearAll();
-		}
-		result = prizeService.uploadAll(model.getFile());
-		return result;
+		return prizeService.uploadAll(model.getFile(), model.isClearAll());
+	}
+
+	/**
+	 * 获取抽选奖项信息
+	 */
+	@GetMapping("/lotto")
+	public PrizeInfoModel getLottoPrize() {
+		return prizeService.getLottoPrize();
 	}
 }

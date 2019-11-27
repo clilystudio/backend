@@ -105,22 +105,18 @@ public class PrizeService {
 	}
 
 	/**
-	 * 清除全部奖项
-	 */
-	public void clearAll() {
-		log.debug("清除全部奖项");
-		prizeGroupInfoRepository.deleteByExample(new TPrizeGroupInfoCriteria());
-		prizeInfoRepository.deleteByExample(new TPrizeInfoCriteria());
-	}
-
-	/**
 	 * 批量导入奖项数据
 	 * 
 	 * @param file 奖项数据
 	 * @return 导入结果
 	 */
-	public CommonResultModel uploadAll(MultipartFile file) {
+	public CommonResultModel uploadAll(MultipartFile file, boolean isClearAll) {
 		log.debug("批量导入奖项数据");
+		if (isClearAll) {
+			// 清除全部奖项
+			prizeGroupInfoRepository.deleteByExample(new TPrizeGroupInfoCriteria());
+			prizeInfoRepository.deleteByExample(new TPrizeInfoCriteria());
+		}
 		BeanListProcessor<PrizeInfoModel> processor = new BeanListProcessor<PrizeInfoModel>(PrizeInfoModel.class);
 		CommonResultModel result = new CommonResultModel();
 		try {
@@ -181,10 +177,12 @@ public class PrizeService {
 		log.debug("删除指定ID奖项信息");
 		CommonResultModel result = new CommonResultModel();
 		for (String prizeId : prizeIds) {
+			// 删除奖项分组信息
 			TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 			example.createCriteria().andPrizeIdEqualTo(prizeId);
 			prizeGroupInfoRepository.deleteByExample(example);
 
+			// 删除奖项信息
 			TPrizeInfoKey key = new TPrizeInfoKey();
 			key.setPrizeId(prizeId);
 			prizeInfoRepository.deleteByPrimaryKey(key);
@@ -209,10 +207,12 @@ public class PrizeService {
 			result.setMessage(new SystemMessage(MessageId.MBE1007).getMessage());
 			return result;
 		}
+		// 添加奖项
 		TPrizeInfo prizeInfo = ConverterUtil.convertObject(prizeInfoModel, TPrizeInfo.class);
 		prizeInfo.setPrizeStatus(CommonConst.PrizeStatus.READYING);
 		prizeInfoRepository.insert(prizeInfo);
 
+		// 添加奖项分组信息
 		TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 		example.createCriteria().andPrizeIdEqualTo(prizeId);
 		prizeGroupInfoRepository.deleteByExample(example);
@@ -243,6 +243,8 @@ public class PrizeService {
 	public CommonResultModel editPrize(PrizeInfoModel prizeInfoModel) {
 		log.debug("编辑奖项");
 		CommonResultModel result = new CommonResultModel();
+		
+		// 编辑奖项
 		TPrizeInfo prizeInfo = ConverterUtil.convertObject(prizeInfoModel, TPrizeInfo.class);
 		prizeInfo.setPrizeStatus(CommonConst.PrizeStatus.READYING);
 		if (prizeInfoRepository.updateByPrimaryKey(prizeInfo) == 0) {
@@ -251,6 +253,7 @@ public class PrizeService {
 			return result;
 		}
 
+		// 重新设置奖项分组信息
 		TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
 		String prizeId = prizeInfoModel.getPrizeId();
 		example.createCriteria().andPrizeIdEqualTo(prizeId);

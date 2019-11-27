@@ -18,7 +18,6 @@ import com.wistronits.wistlotto.framework.message.MessageId;
 import com.wistronits.wistlotto.framework.message.SystemMessage;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.LottoInfoModel;
-import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.WinnerInfoModel;
 import com.wistronits.wistlotto.model.CommonConst;
 import com.wistronits.wistlotto.model.CommonConst.ResultCode;
@@ -71,9 +70,6 @@ public class SysService {
 
 	@Inject
 	private SimpMessagingTemplate webSocket;
-
-	@Inject
-	private PrizeService prizeService;
 
 	/**
 	 * 清除全部系统设置
@@ -198,20 +194,26 @@ public class SysService {
 		BigDecimal ungroupNum = BigDecimal.ZERO;
 		for (TEmpInfo empInfo : empList) {
 			String groupId = empInfo.getGroupId();
+			// 组内分配标识
 			boolean ungroup = true;
+			// 匹配组ID
 			for (TPrizeGroupInfo prizeGroupInfo : prizeGroupInfoList) {
 				if (StringUtils.equalsIgnoreCase(prizeGroupInfo.getGroupId(), CommonConst.UNLIMIT_GROUP)
 						|| StringUtils.equalsIgnoreCase(prizeGroupInfo.getGroupId(), groupId)) {
 					if (prizeGroupInfo.getPrizeNumber().compareTo(prizeGroupInfo.getPrizeWinner()) <= 0) {
+						// 组内中奖数已等于奖项数时，奖项数加一
 						prizeGroupInfo.setPrizeNumber(prizeGroupInfo.getPrizeNumber().add(BigDecimal.ONE));
+						// 未能正常组内分配数加一
 						ungroupNum = ungroupNum.add(BigDecimal.ONE);
 					}
+					// 组内中奖数加一
 					prizeGroupInfo.setPrizeWinner(prizeGroupInfo.getPrizeWinner().add(BigDecimal.ONE));
 					ungroup = false;
 					break;
 				}
 			}
 			if (ungroup) {
+				// 未能正常组内分配时，记录下分组信息
 				ungroupNum = ungroupNum.add(BigDecimal.ONE);
 				if (prizeGroupInfoMap.containsKey(groupId)) {
 					TPrizeGroupInfo prizeGroupInfo2 = prizeGroupInfoMap.get(groupId);
@@ -229,7 +231,7 @@ public class SysService {
 			empInfo.setPrizeFlag(CommonConst.PrizeFlag.WIN);
 		}
 
-		// 未能确定分组的中奖人数从其他组中扣除，优先顺序是剩余奖项数，奖项数从大到小
+		// 将未能正常组内分配的中奖组，分摊到其它组内，优先顺序是剩余奖项数，奖项数从大到小
 		Comparator<TPrizeGroupInfo> comparator = new Comparator<TPrizeGroupInfo>() {
 			@Override
 			public int compare(TPrizeGroupInfo o1, TPrizeGroupInfo o2) {
@@ -249,6 +251,7 @@ public class SysService {
 
 		while (ungroupNum.compareTo(BigDecimal.ZERO) > 0) {
 			prizeGroupInfoList.sort(comparator);
+			// 分摊错误
 			boolean isError = true;
 			for (TPrizeGroupInfo prizeGroupInfo : prizeGroupInfoList) {
 				if (prizeGroupInfo.getPrizeNumber().compareTo(prizeGroupInfo.getPrizeWinner()) > 0) {
@@ -259,7 +262,7 @@ public class SysService {
 				}
 			}
 			if (isError) {
-				// 中奖数超过了奖项数。这种情况理论上不应该出现
+				// 分摊错误，中奖数超过了奖项数。这种情况理论上不应该出现
 				String message = new SystemMessage(MessageId.MBE1012).getMessage();
 				log.error(message);
 				result.setCode(ResultCode.FAILED);
@@ -419,30 +422,6 @@ public class SysService {
 		result.setMessage(new SystemMessage(MessageId.MBI1008).getMessage());
 		webSocket.convertAndSend(CommonConst.STATUS_BROADCAST, "");
 		return result;
-	}
-
-	/**
-	 * 取得可抽选奖项
-	 * 
-	 * @return 奖项信息
-	 */
-	public PrizeInfoModel getLottoPrize() {
-//		// 读取系统配置，查找抽选控制信息
-//		TSysInfo sysInfo = getValue(CommonConst.SysKey.KEY_LOTTO);
-//		if (Objects.nonNull(sysInfo) && StringUtils.isNoneEmpty(sysInfo.getSysValue())) {
-//			ControlInfoModel controlInfo = ConverterUtil.convertFromJSONToApp(sysInfo.getSysValue(),
-//					ControlInfoModel.class);
-//			if (Objects.isNull(controlInfo)) {
-//				deleteValue(CommonConst.SysKey.KEY_LOTTO);
-//			} else {
-//				// 根据控制信息查找抽选奖项
-//				PrizeInfoModel controlPrizeInfo = prizeService.getPrize(controlInfo.getPrizeId());
-//				if (Objects.nonNull(controlPrizeInfo) && controlPrizeInfo.getPrizeNumber().compareTo(controlPrizeInfo.getPrizeWinner()) > 0) {
-//					return controlPrizeInfo;
-//				}
-//			}
-//		}
-		return prizeService.getLottoPrize();
 	}
 
 	/**

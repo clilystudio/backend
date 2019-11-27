@@ -1,9 +1,6 @@
 package com.wistronits.wistlotto.api;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
-
 import javax.inject.Inject;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,15 +35,7 @@ public class EmpApiController {
 	 */
 	@GetMapping("/list")
 	public List<EmpInfoModel> getList() {
-		List<EmpInfoModel> empList = empService.getEmpList();
-		int size = empList.size();
-		Random rnd = new Random(System.currentTimeMillis());
-		empList.forEach(e -> {
-			// 前端抽奖时乱序排列
-			BigDecimal order = new BigDecimal(10000).add(new BigDecimal(rnd.nextInt(size)));
-			e.setOrder(order);
-		});
-		return empList;
+		return empService.getEmpList();
 	}
 
 	/**
@@ -90,11 +79,6 @@ public class EmpApiController {
 	 */
 	@PostMapping("/upload")
 	public CommonResultModel uploadAll(@ModelAttribute UploadCSVModel model) {
-		CommonResultModel result = new CommonResultModel();
-		if (model.isClearFlag()) {
-			empService.clearAll();
-		}
-		result = empService.uploadAll(model.getFile());
-		return result;
+		return empService.uploadAll(model.getFile(), model.isClearAll());
 	}
 }

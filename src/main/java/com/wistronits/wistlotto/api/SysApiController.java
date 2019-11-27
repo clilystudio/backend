@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.LottoInfoModel;
-import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.WinnerInfoModel;
 import com.wistronits.wistlotto.model.tables.TSysInfo;
 import com.wistronits.wistlotto.service.SysService;
@@ -91,14 +90,6 @@ public class SysApiController {
 	@PostMapping("/removelotto")
 	public CommonResultModel removeLotto(@RequestBody WinnerInfoModel winnerInfo) {
 		return sysService.removeWinner(winnerInfo);
-	}
-
-	/**
-	 * 获取抽选奖项信息
-	 */
-	@GetMapping("/prize")
-	public PrizeInfoModel getLottoPrize() {
-		return sysService.getLottoPrize();
 	}
 
 	/**
