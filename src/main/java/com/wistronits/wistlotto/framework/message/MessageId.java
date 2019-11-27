@@ -2,8 +2,8 @@ package com.wistronits.wistlotto.framework.message;
 
 /**
  * 消息ID定义
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 public enum MessageId {
 	/** 出现未知系统错误，请查看日志获取更多内容。 */

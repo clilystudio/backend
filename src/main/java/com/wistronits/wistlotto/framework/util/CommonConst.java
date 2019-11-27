@@ -2,8 +2,8 @@ package com.wistronits.wistlotto.framework.util;
 
 /**
  * 系统常量
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 public class CommonConst {
 

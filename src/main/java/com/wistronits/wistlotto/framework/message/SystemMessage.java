@@ -11,8 +11,8 @@ import lombok.Data;
 
 /**
  * 系统消息
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 @Data
 @Component

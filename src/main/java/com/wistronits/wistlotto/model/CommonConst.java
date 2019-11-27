@@ -42,7 +42,7 @@ public final class CommonConst {
 		public static final String KEY_LOTTO = "lotto";
 		public static final String KEY_WINNER = "winner";
 	}
-	
+
 	/** 不限定抽奖组 */
 	public static final String UNLIMIT_GROUP = "000000";
 
@@ -50,9 +50,9 @@ public final class CommonConst {
 	public static final class Delimiter {
 		public static final String GROUP = ";";
 		public static final String ITEM = "#";
-	}	
-	
+	}
+
 	public static final String END_POINT = "/lotto-stomp-endpoint";
-	
+
 	public static final String STATUS_BROADCAST = "/status/broadcast";
 }

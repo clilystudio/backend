@@ -12,8 +12,8 @@ import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl;
 
 /**
  * Mybatis类型解析插件
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 public class TypeResolverPlugin extends JavaTypeResolverDefaultImpl {
 	/**

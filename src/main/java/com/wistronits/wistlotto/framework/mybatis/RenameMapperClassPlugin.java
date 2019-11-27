@@ -7,8 +7,8 @@ import org.mybatis.generator.api.PluginAdapter;
 
 /**
  * Mybatis重命名插件
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 public class RenameMapperClassPlugin extends PluginAdapter {
 	@Override

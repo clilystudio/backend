@@ -39,17 +39,17 @@
     </encoder>
   </appender>
   <logger name="org.springframework" additivity="false">
-    <level value="info" />
+    <level value="warn" />
     <appender-ref ref="STDOUT" />
     <appender-ref ref="SPRING_LOG" />
   </logger>
   <logger name="org.thymeleaf" additivity="false">
-    <level value="info" />
+    <level value="warn" />
     <appender-ref ref="STDOUT" />
     <appender-ref ref="SPRING_LOG" />
   </logger>
   <logger name="org" additivity="false">
-    <level value="info" />
+    <level value="warn" />
     <appender-ref ref="STDOUT" />
     <appender-ref ref="SPRING_LOG" />
   </logger>

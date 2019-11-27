@@ -10,8 +10,8 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
 
 /**
  * Mybatis注解生成插件
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 public class MapperAnnotationPlugin extends PluginAdapter {
 	@Override

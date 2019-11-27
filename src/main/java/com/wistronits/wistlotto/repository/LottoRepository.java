@@ -8,8 +8,8 @@ import com.wistronits.wistlotto.model.tables.TPrizeInfo;
 
 /**
  * 抽奖相关DAO
- * @author 盛广立
- * 2019年1月16日
+ * 
+ * @author 盛广立 2019年1月16日
  */
 @Mapper
 public interface LottoRepository {

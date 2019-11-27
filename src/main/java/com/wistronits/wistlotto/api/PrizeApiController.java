@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.PrizeInfoModel;
 import com.wistronits.wistlotto.model.UploadCSVModel;
-import com.wistronits.wistlotto.model.tables.TPrizeInfo;
 import com.wistronits.wistlotto.service.PrizeService;
 
 /**
@@ -36,7 +35,6 @@ public class PrizeApiController {
 	 */
 	@GetMapping("/list")
 	public List<PrizeInfoModel> getPrizeList() {
-		// 处理"/prizes/list"的GET请求，用来获取奖项列表
 		return prizeService.getPrizeList();
 	}
 
@@ -59,7 +57,6 @@ public class PrizeApiController {
 	 */
 	@PostMapping("/add")
 	public CommonResultModel addPrize(@RequestBody PrizeInfoModel prizeInfoModel) {
-		// 处理"/prize/add"的POST请求，用来添加奖项
 		return prizeService.addPrize(prizeInfoModel);
 	}
 
@@ -81,8 +78,8 @@ public class PrizeApiController {
 	 * @return 编辑结果
 	 */
 	@PostMapping("/edit")
-	public CommonResultModel editPrize(@RequestBody TPrizeInfo prizeInfo) {
-		return prizeService.editPrize(prizeInfo);
+	public CommonResultModel editPrize(@RequestBody PrizeInfoModel prizeInfoModel) {
+		return prizeService.editPrize(prizeInfoModel);
 	}
 
 	/**

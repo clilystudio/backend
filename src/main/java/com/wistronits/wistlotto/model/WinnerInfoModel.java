@@ -27,7 +27,7 @@ public class WinnerInfoModel implements Serializable {
 
 	// 员工ID
 	private String empId;
-	
+
 	// 抽奖组ID
 	private String groupId;
 

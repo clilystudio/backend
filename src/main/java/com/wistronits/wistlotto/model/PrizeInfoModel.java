@@ -50,10 +50,10 @@ public class PrizeInfoModel implements Serializable {
 
 	// 奖项状态
 	private String prizeStatus;
-	
+
 	// 奖品数量
-    private BigDecimal prizeNumber;
-    
-    // 已中奖数量
-    private BigDecimal prizeWinner;
+	private BigDecimal prizeNumber;
+
+	// 已中奖数量
+	private BigDecimal prizeWinner;
 }

@@ -46,7 +46,7 @@ public class EmpService {
 	 * @return 员工一览
 	 */
 	public List<EmpInfoModel> getEmpList() {
-		log.debug("###getEmpList");
+		log.debug("获取员工一览");
 		return lottoRepository.getEmpList();
 	}
 
@@ -54,7 +54,7 @@ public class EmpService {
 	 * 清除全部员工数据
 	 */
 	public void clearAll() {
-		log.debug("###clearAll");
+		log.debug("清除全部员工数据");
 		empInfoRepository.deleteByExample(new TEmpInfoCriteria());
 	}
 
@@ -62,7 +62,7 @@ public class EmpService {
 	 * 批量导入员工数据
 	 */
 	public CommonResultModel uploadAll(MultipartFile file) {
-		log.debug("###uploadAll");
+		log.debug("批量导入员工数据");
 		BeanListProcessor<EmpInfoModel> processor = new BeanListProcessor<EmpInfoModel>(EmpInfoModel.class);
 		CommonResultModel result = new CommonResultModel();
 		try {

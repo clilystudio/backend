@@ -37,7 +37,7 @@ public class LottoController {
 	@MessageMapping("/control")
 	@SendTo("/status/control")
 	public ControlInfoModel sendControl(ControlInfoModel controlInfo) {
-		log.debug("sendControl：" + ConverterUtil.convertFromAppToJSON(controlInfo));
+		log.debug("发送抽奖控制命令：" + ConverterUtil.convertFromAppToJSON(controlInfo));
 		ControlInfoModel lottoStatus = new ControlInfoModel();
 		String command = controlInfo.getCommand();
 		lottoStatus.setPrizeId(controlInfo.getPrizeId());
@@ -66,7 +66,7 @@ public class LottoController {
 	@MessageMapping("/change")
 	@SendTo("/status/change")
 	public ControlInfoModel changeStatus(ControlInfoModel controlInfo) {
-		log.debug("changeStatus：" + ConverterUtil.convertFromAppToJSON(controlInfo));
+		log.debug("设置抽奖状态：" + ConverterUtil.convertFromAppToJSON(controlInfo));
 		ControlInfoModel lottoStatus = new ControlInfoModel();
 		String command = controlInfo.getCommand();
 		String prizeId = controlInfo.getPrizeId();
@@ -88,8 +88,7 @@ public class LottoController {
 	}
 
 	/**
-	 * 保存抽奖控制信息 防止网页关闭的情况，重新运行时可以恢复
-	 * 当前版本没有使用，以后考虑
+	 * 保存抽奖控制信息 防止网页关闭的情况，重新运行时可以恢复 当前版本没有使用，以后考虑
 	 * 
 	 * @param lottoStatus
 	 */
@@ -98,6 +97,6 @@ public class LottoController {
 		sysInfo.setSysKey(CommonConst.SysKey.KEY_LOTTO);
 		sysInfo.setSysValue(ConverterUtil.convertFromAppToJSON(lottoStatus));
 		sysService.setValue(sysInfo);
-		log.debug("saveStatus：" + ConverterUtil.convertFromAppToJSON(lottoStatus));
+		log.debug("保存抽奖控制信息：" + ConverterUtil.convertFromAppToJSON(lottoStatus));
 	}
 }

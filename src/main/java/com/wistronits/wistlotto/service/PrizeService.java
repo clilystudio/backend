@@ -56,7 +56,7 @@ public class PrizeService {
 	 * @return 奖项一览
 	 */
 	public List<PrizeInfoModel> getPrizeList() {
-		log.debug("###getPrizeList");
+		log.debug("获取奖项一览");
 		List<PrizeInfoModel> prizeList = new ArrayList<>();
 		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
 		example.setOrderByClause("prize_order asc, prize_id asc");
@@ -75,7 +75,7 @@ public class PrizeService {
 	 */
 	private PrizeInfoModel getPrizeInfoModel(TPrizeInfo prizeInfo) {
 		if (Objects.isNull(prizeInfo)) {
-			return null;
+			return new PrizeInfoModel();
 		}
 		PrizeInfoModel prizeInfoModel = ConverterUtil.convertObject(prizeInfo, PrizeInfoModel.class);
 
@@ -108,7 +108,7 @@ public class PrizeService {
 	 * 清除全部奖项
 	 */
 	public void clearAll() {
-		log.debug("###clearAll");
+		log.debug("清除全部奖项");
 		prizeGroupInfoRepository.deleteByExample(new TPrizeGroupInfoCriteria());
 		prizeInfoRepository.deleteByExample(new TPrizeInfoCriteria());
 	}
@@ -120,7 +120,7 @@ public class PrizeService {
 	 * @return 导入结果
 	 */
 	public CommonResultModel uploadAll(MultipartFile file) {
-		log.debug("###uploadAll");
+		log.debug("批量导入奖项数据");
 		BeanListProcessor<PrizeInfoModel> processor = new BeanListProcessor<PrizeInfoModel>(PrizeInfoModel.class);
 		CommonResultModel result = new CommonResultModel();
 		try {
@@ -147,10 +147,13 @@ public class PrizeService {
 	 * @return 奖项信息
 	 */
 	public PrizeInfoModel getPrize(String prizeId) {
-		log.debug("###getPrize");
+		log.debug("取得指定ID奖项信息");
 		TPrizeInfoKey key = new TPrizeInfoKey();
 		key.setPrizeId(prizeId);
 		TPrizeInfo prizeInfo = prizeInfoRepository.selectByPrimaryKey(key);
+		if (Objects.isNull(prizeInfo)) {
+			return null;
+		}
 		return getPrizeInfoModel(prizeInfo);
 	}
 
@@ -161,7 +164,7 @@ public class PrizeService {
 	 */
 	public PrizeInfoModel getLottoPrize() {
 		List<TPrizeInfo> prizeList = lottoRepository.getLottoPrize();
-		TPrizeInfo prizeInfo = new TPrizeInfo();
+		TPrizeInfo prizeInfo = null;
 		if (prizeList.size() > 0) {
 			prizeInfo = prizeList.get(0);
 		}
@@ -175,7 +178,7 @@ public class PrizeService {
 	 * @return 删除结果
 	 */
 	public CommonResultModel deletePrizes(String[] prizeIds) {
-		log.debug("###deletePrizes");
+		log.debug("删除指定ID奖项信息");
 		CommonResultModel result = new CommonResultModel();
 		for (String prizeId : prizeIds) {
 			TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
@@ -198,7 +201,7 @@ public class PrizeService {
 	 * @return 添加结果
 	 */
 	public CommonResultModel addPrize(PrizeInfoModel prizeInfoModel) {
-		log.debug("###addPrize");
+		log.debug("添加奖项");
 		CommonResultModel result = new CommonResultModel();
 		String prizeId = prizeInfoModel.getPrizeId();
 		if (Objects.nonNull(getPrize(prizeId))) {
@@ -237,13 +240,32 @@ public class PrizeService {
 	 * @param prizeInfo 奖项信息
 	 * @return 编辑结果
 	 */
-	public CommonResultModel editPrize(TPrizeInfo prizeInfo) {
-		log.debug("###editPrize");
+	public CommonResultModel editPrize(PrizeInfoModel prizeInfoModel) {
+		log.debug("编辑奖项");
 		CommonResultModel result = new CommonResultModel();
+		TPrizeInfo prizeInfo = ConverterUtil.convertObject(prizeInfoModel, TPrizeInfo.class);
+		prizeInfo.setPrizeStatus(CommonConst.PrizeStatus.READYING);
 		if (prizeInfoRepository.updateByPrimaryKey(prizeInfo) == 0) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1008).getMessage());
 			return result;
+		}
+
+		TPrizeGroupInfoCriteria example = new TPrizeGroupInfoCriteria();
+		String prizeId = prizeInfoModel.getPrizeId();
+		example.createCriteria().andPrizeIdEqualTo(prizeId);
+		prizeGroupInfoRepository.deleteByExample(example);
+
+		String groupLimit = prizeInfoModel.getGroupLimit();
+		String[] prizeGroups = groupLimit.split(CommonConst.Delimiter.GROUP);
+		for (String prizeGroup : prizeGroups) {
+			String[] prizeGroupInfos = prizeGroup.split(CommonConst.Delimiter.ITEM);
+			TPrizeGroupInfo prizeGroupInfo = new TPrizeGroupInfo();
+			prizeGroupInfo.setPrizeId(prizeId);
+			prizeGroupInfo.setGroupId(prizeGroupInfos[0]);
+			prizeGroupInfo.setPrizeNumber(new BigDecimal(prizeGroupInfos[1]));
+			prizeGroupInfo.setPrizeWinner(BigDecimal.ZERO);
+			prizeGroupInfoRepository.insert(prizeGroupInfo);
 		}
 		result.setCode(ResultCode.SUCCESS);
 		result.setMessage(new SystemMessage(MessageId.MBI1007).getMessage());

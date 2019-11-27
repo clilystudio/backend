@@ -28,7 +28,7 @@ public class SysApiController {
 
 	@Inject
 	private SysService sysService;
-	
+
 	/**
 	 * 获取指定Key的系统设置
 	 * 
