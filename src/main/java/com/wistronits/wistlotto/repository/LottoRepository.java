@@ -3,7 +3,9 @@ package com.wistronits.wistlotto.repository;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.wistronits.wistlotto.model.EmpInfoModel;
+import com.wistronits.wistlotto.model.GroupInfoModel;
 import com.wistronits.wistlotto.model.WinnerInfoModel;
+import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.model.tables.TPrizeInfo;
 
 /**
@@ -55,4 +57,18 @@ public interface LottoRepository {
 	 * @return 更新件数
 	 */
 	int resetPrizeGroupInfo();
+
+	/**
+	 * 取得分组信息
+	 * 
+	 * @return 分组信息
+	 */
+	List<GroupInfoModel> getGroupList();
+
+	/**
+	 * 设置分组员工中奖权值
+	 * 
+	 * @return 更新件数
+	 */
+	int setGroupEmpRate(TEmpInfo empInfo);	
 }

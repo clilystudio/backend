@@ -30,6 +30,10 @@
     <result column="prize_multi" jdbcType="VARCHAR" property="prizeMulti" />
     <result column="prize_status" jdbcType="VARCHAR" property="prizeStatus" />
   </resultMap>
+  <resultMap id="GroupInfoMap" type="com.wistronits.wistlotto.model.GroupInfoModel">
+    <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+    <result column="group_count" jdbcType="INTEGER" property="groupCount" />
+  </resultMap>
   <sql id="EmpInfo_Column_List">
     a.emp_id, a.group_id, a.emp_name, a.emp_sex, a.emp_date, a.dept_id, b.dept_name, b.branch_id, 
     a.emp_rate, a.prize_flag
@@ -78,5 +82,16 @@
   </update>
   <update id="resetPrizeGroupInfo">
   	update t_prize_group_info set prize_winner = 0
+  </update>
+  <select id="getGroupList" resultMap="GroupInfoMap">
+    select group_id, count(*) as group_count
+    from t_emp_info
+    group by group_id
+    order by group_id asc
+  </select>
+  <update id="setGroupEmpRate" parameterType="com.wistronits.wistlotto.model.tables.TEmpInfo">
+  	update t_emp_info set emp_rate = emp_rate * #{empRate,jdbcType=INTEGER}
+  	where group_id = #{groupId,jdbcType=VARCHAR}
+  	and emp_id between '' and #{empId,jdbcType=VARCHAR}
   </update>
 </mapper>

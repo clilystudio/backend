@@ -1,6 +1,8 @@
 package com.wistronits.wistlotto.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -14,6 +16,7 @@ import com.univocity.parsers.common.processor.BeanListProcessor;
 import com.wistronits.wistlotto.model.CommonConst.ResultCode;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.EmpInfoModel;
+import com.wistronits.wistlotto.model.GroupInfoModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.model.tables.TEmpInfoCriteria;
 import com.wistronits.wistlotto.model.tables.TEmpInfoKey;
@@ -83,6 +86,7 @@ public class EmpService {
 				setEmpDate(empInfo);
 				empInfoRepository.insert(empInfo);
 			}
+			setEmpRate();
 			result.setCode(ResultCode.SUCCESS);
 			result.setMessage(new SystemMessage(MessageId.MBI1001).getMessage());
 		} catch (SystemException e) {
@@ -91,6 +95,26 @@ public class EmpService {
 			result.setMessage(e.getMessages().get(0).getMessage());
 		}
 		return result;
+	}
+
+	/**
+	 * 设置员工中奖权值（每组入职日期前三分之一员工的中奖权值翻倍）
+	 */
+	private void setEmpRate() {
+		List<GroupInfoModel> groupList = lottoRepository.getGroupList();
+		for (GroupInfoModel groupInfo : groupList) {
+			BigDecimal count = groupInfo.getGroupCount();
+			if (count.compareTo(BigDecimal.ONE) > 0) {
+				int idx = count.divide(new BigDecimal(3), 0, RoundingMode.DOWN).intValue();
+				TEmpInfoCriteria example = new TEmpInfoCriteria();
+				example.createCriteria().andGroupIdEqualTo(groupInfo.getGroupId());
+				example.setOrderByClause("emp_date asc");
+				List<TEmpInfo> empInfoList = empInfoRepository.selectByExample(example);
+				TEmpInfo empInfo = empInfoList.get(idx);
+				empInfo.setEmpRate(new BigDecimal(2));
+				lottoRepository.setGroupEmpRate(empInfo);
+			}
+		}
 	}
 
 	/**
