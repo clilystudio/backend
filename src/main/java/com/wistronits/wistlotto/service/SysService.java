@@ -171,9 +171,9 @@ public class SysService {
 	}
 
 	/**
-	 * 设置中奖信息
+	 * 设置抽奖信息
 	 * 
-	 * @param lottoInfo 中奖信息
+	 * @param lottoInfo 抽奖信息
 	 * @return 设置结果
 	 */
 	public CommonResultModel setLotto(LottoInfoModel lottoInfo) {
@@ -427,9 +427,9 @@ public class SysService {
 	/**
 	 * 刷新前台
 	 * 
-	 * @return 移除结果
+	 * @return 刷新结果
 	 */
-	public CommonResultModel refreshFront() {
+	public CommonResultModel refresh() {
 		log.debug("刷新前台");
 		CommonResultModel result = new CommonResultModel();
 		result.setCode(ResultCode.SUCCESS);

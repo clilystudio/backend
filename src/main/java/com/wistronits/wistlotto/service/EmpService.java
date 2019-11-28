@@ -2,7 +2,6 @@ package com.wistronits.wistlotto.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -13,6 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.univocity.parsers.common.processor.BeanListProcessor;
+import com.wistronits.wistlotto.framework.exception.SystemException;
+import com.wistronits.wistlotto.framework.message.MessageId;
+import com.wistronits.wistlotto.framework.message.SystemMessage;
+import com.wistronits.wistlotto.framework.util.ConverterUtil;
+import com.wistronits.wistlotto.framework.util.CsvUtil;
 import com.wistronits.wistlotto.model.CommonConst.ResultCode;
 import com.wistronits.wistlotto.model.CommonResultModel;
 import com.wistronits.wistlotto.model.EmpInfoModel;
@@ -20,11 +24,6 @@ import com.wistronits.wistlotto.model.GroupInfoModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.model.tables.TEmpInfoCriteria;
 import com.wistronits.wistlotto.model.tables.TEmpInfoKey;
-import com.wistronits.wistlotto.framework.exception.SystemException;
-import com.wistronits.wistlotto.framework.message.MessageId;
-import com.wistronits.wistlotto.framework.message.SystemMessage;
-import com.wistronits.wistlotto.framework.util.ConverterUtil;
-import com.wistronits.wistlotto.framework.util.CsvUtil;
 import com.wistronits.wistlotto.repository.LottoRepository;
 import com.wistronits.wistlotto.repository.tables.TEmpInfoRepository;
 
@@ -50,7 +49,7 @@ public class EmpService {
 	 * 
 	 * @return 员工一览
 	 */
-	public List<EmpInfoModel> getEmpList() {		
+	public List<EmpInfoModel> getList() {		
 		log.debug("获取员工一览");
 		List<EmpInfoModel> empList = lottoRepository.getEmpList();
 		int size = empList.size();
@@ -123,7 +122,7 @@ public class EmpService {
 	 * @param empIds 员工ID数组
 	 * @return 删除结果
 	 */
-	public CommonResultModel deleteEmps(String[] empIds) {
+	public CommonResultModel delete(String[] empIds) {
 		CommonResultModel result = new CommonResultModel();
 		for (String empId : empIds) {
 			TEmpInfoKey key = new TEmpInfoKey();
@@ -141,7 +140,7 @@ public class EmpService {
 	 * @param empInfo 员工信息
 	 * @return 添加结果
 	 */
-	public CommonResultModel addEmp(TEmpInfo empInfo) {
+	public CommonResultModel add(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
 		TEmpInfoKey key = new TEmpInfoKey();
 		String empId = empInfo.getEmpId();
@@ -164,7 +163,7 @@ public class EmpService {
 	 * @param empInfo 员工数据
 	 * @return 编辑结果
 	 */
-	public CommonResultModel editEmp(TEmpInfo empInfo) {
+	public CommonResultModel edit(TEmpInfo empInfo) {
 		CommonResultModel result = new CommonResultModel();
 		setEmpDate(empInfo);
 		if (empInfoRepository.updateByPrimaryKey(empInfo) == 0) {

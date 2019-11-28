@@ -34,8 +34,8 @@ public class PrizeApiController {
 	 * @return 奖项一览
 	 */
 	@GetMapping("/list")
-	public List<PrizeInfoModel> getPrizeList() {
-		return prizeService.getPrizeList();
+	public List<PrizeInfoModel> getList() {
+		return prizeService.getList();
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class PrizeApiController {
 	 * @return 奖项信息
 	 */
 	@GetMapping("/get/{prizeId}")
-	public PrizeInfoModel getPrize(@PathVariable String prizeId) {
-		return prizeService.getPrize(prizeId);
+	public PrizeInfoModel get(@PathVariable String prizeId) {
+		return prizeService.get(prizeId);
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class PrizeApiController {
 	 * @return 添加结果
 	 */
 	@PostMapping("/add")
-	public CommonResultModel addPrize(@RequestBody PrizeInfoModel prizeInfoModel) {
-		return prizeService.addPrize(prizeInfoModel);
+	public CommonResultModel add(@RequestBody PrizeInfoModel prizeInfoModel) {
+		return prizeService.add(prizeInfoModel);
 	}
 
 	/**
@@ -67,8 +67,8 @@ public class PrizeApiController {
 	 * @return 删除结果
 	 */
 	@PostMapping("/delete")
-	public CommonResultModel deletePrizes(@RequestBody String[] prizeIds) {
-		return prizeService.deletePrizes(prizeIds);
+	public CommonResultModel delete(@RequestBody String[] prizeIds) {
+		return prizeService.delete(prizeIds);
 	}
 
 	/**
@@ -78,8 +78,8 @@ public class PrizeApiController {
 	 * @return 编辑结果
 	 */
 	@PostMapping("/edit")
-	public CommonResultModel editPrize(@RequestBody PrizeInfoModel prizeInfoModel) {
-		return prizeService.editPrize(prizeInfoModel);
+	public CommonResultModel edit(@RequestBody PrizeInfoModel prizeInfoModel) {
+		return prizeService.edit(prizeInfoModel);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class PrizeApiController {
 	 * 获取抽选奖项信息
 	 */
 	@GetMapping("/lotto")
-	public PrizeInfoModel getLottoPrize() {
-		return prizeService.getLottoPrize();
+	public PrizeInfoModel getLotto() {
+		return prizeService.getLotto();
 	}
 }

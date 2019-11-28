@@ -35,7 +35,7 @@ public class EmpApiController {
 	 */
 	@GetMapping("/list")
 	public List<EmpInfoModel> getList() {
-		return empService.getEmpList();
+		return empService.getList();
 	}
 
 	/**
@@ -45,8 +45,8 @@ public class EmpApiController {
 	 * @return 添加结果
 	 */
 	@PostMapping("/add")
-	public CommonResultModel addEmp(@RequestBody TEmpInfo empInfo) {
-		return empService.addEmp(empInfo);
+	public CommonResultModel add(@RequestBody TEmpInfo empInfo) {
+		return empService.add(empInfo);
 	}
 
 	/**
@@ -56,8 +56,8 @@ public class EmpApiController {
 	 * @return 删除结果
 	 */
 	@PostMapping("/delete")
-	public CommonResultModel deleteEmps(@RequestBody String[] empIds) {
-		return empService.deleteEmps(empIds);
+	public CommonResultModel delete(@RequestBody String[] empIds) {
+		return empService.delete(empIds);
 	}
 
 	/**
@@ -67,8 +67,8 @@ public class EmpApiController {
 	 * @return 编辑结果
 	 */
 	@PostMapping("/edit")
-	public CommonResultModel editEmp(@RequestBody TEmpInfo empInfo) {
-		return empService.editEmp(empInfo);
+	public CommonResultModel edit(@RequestBody TEmpInfo empInfo) {
+		return empService.edit(empInfo);
 	}
 
 	/**

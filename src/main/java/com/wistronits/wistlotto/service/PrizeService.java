@@ -55,7 +55,7 @@ public class PrizeService {
 	 * 
 	 * @return 奖项一览
 	 */
-	public List<PrizeInfoModel> getPrizeList() {
+	public List<PrizeInfoModel> getList() {
 		log.debug("获取奖项一览");
 		List<PrizeInfoModel> prizeList = new ArrayList<>();
 		TPrizeInfoCriteria example = new TPrizeInfoCriteria();
@@ -123,7 +123,7 @@ public class PrizeService {
 			CsvUtil.loadFile(file, processor);
 			List<PrizeInfoModel> prizeAllInfo = processor.getBeans();
 			for (PrizeInfoModel prizeInfoModel : prizeAllInfo) {
-				addPrize(prizeInfoModel);
+				add(prizeInfoModel);
 			}
 			result.setCode(ResultCode.SUCCESS);
 			result.setMessage(new SystemMessage(MessageId.MBI1001).getMessage());
@@ -142,7 +142,7 @@ public class PrizeService {
 	 * @param groupId 抽奖组ID
 	 * @return 奖项信息
 	 */
-	public PrizeInfoModel getPrize(String prizeId) {
+	public PrizeInfoModel get(String prizeId) {
 		log.debug("取得指定ID奖项信息");
 		TPrizeInfoKey key = new TPrizeInfoKey();
 		key.setPrizeId(prizeId);
@@ -158,7 +158,7 @@ public class PrizeService {
 	 * 
 	 * @return 奖项信息
 	 */
-	public PrizeInfoModel getLottoPrize() {
+	public PrizeInfoModel getLotto() {
 		List<TPrizeInfo> prizeList = lottoRepository.getLottoPrize();
 		TPrizeInfo prizeInfo = null;
 		if (prizeList.size() > 0) {
@@ -173,7 +173,7 @@ public class PrizeService {
 	 * @param prizeInfos 奖项ID数组
 	 * @return 删除结果
 	 */
-	public CommonResultModel deletePrizes(String[] prizeIds) {
+	public CommonResultModel delete(String[] prizeIds) {
 		log.debug("删除指定ID奖项信息");
 		CommonResultModel result = new CommonResultModel();
 		for (String prizeId : prizeIds) {
@@ -198,11 +198,11 @@ public class PrizeService {
 	 * @param prizeInfo 奖项信息
 	 * @return 添加结果
 	 */
-	public CommonResultModel addPrize(PrizeInfoModel prizeInfoModel) {
+	public CommonResultModel add(PrizeInfoModel prizeInfoModel) {
 		log.debug("添加奖项");
 		CommonResultModel result = new CommonResultModel();
 		String prizeId = prizeInfoModel.getPrizeId();
-		if (Objects.nonNull(getPrize(prizeId))) {
+		if (Objects.nonNull(get(prizeId))) {
 			result.setCode(ResultCode.FAILED);
 			result.setMessage(new SystemMessage(MessageId.MBE1007).getMessage());
 			return result;
@@ -240,7 +240,7 @@ public class PrizeService {
 	 * @param prizeInfo 奖项信息
 	 * @return 编辑结果
 	 */
-	public CommonResultModel editPrize(PrizeInfoModel prizeInfoModel) {
+	public CommonResultModel edit(PrizeInfoModel prizeInfoModel) {
 		log.debug("编辑奖项");
 		CommonResultModel result = new CommonResultModel();
 		

@@ -35,7 +35,7 @@ public class SysApiController {
 	 * @return 系统设置
 	 */
 	@GetMapping("/get/{sysKey}")
-	public TSysInfo getValue(@PathVariable String sysKey) {
+	public TSysInfo get(@PathVariable String sysKey) {
 		return sysService.getValue(sysKey);
 	}
 
@@ -46,7 +46,7 @@ public class SysApiController {
 	 * @return 保存结果
 	 */
 	@PostMapping("/set")
-	public CommonResultModel setValue(@RequestBody TSysInfo sysInfo) {
+	public CommonResultModel set(@RequestBody TSysInfo sysInfo) {
 		return sysService.setValue(sysInfo);
 	}
 
@@ -66,14 +66,14 @@ public class SysApiController {
 	 * @return 重置结果
 	 */
 	@PostMapping("/reset")
-	public CommonResultModel resetSys() {
+	public CommonResultModel reset() {
 		return sysService.reset();
 	}
 
 	/**
-	 * 设置中奖信息
+	 * 设置抽奖信息
 	 * 
-	 * @param lottoInfo 中奖信息
+	 * @param lottoInfo 抽奖信息
 	 * @return 设置结果
 	 */
 	@PostMapping("/setlotto")
@@ -87,18 +87,18 @@ public class SysApiController {
 	 * @param winnerInfo 中奖信息
 	 * @return 移除结果
 	 */
-	@PostMapping("/removelotto")
-	public CommonResultModel removeLotto(@RequestBody WinnerInfoModel winnerInfo) {
+	@PostMapping("/removewinner")
+	public CommonResultModel removeWinner(@RequestBody WinnerInfoModel winnerInfo) {
 		return sysService.removeWinner(winnerInfo);
 	}
 
 	/**
 	 * 刷新前台
 	 * 
-	 * @return 移除结果
+	 * @return 刷新结果
 	 */
-	@PostMapping("/refreshfront")
-	public CommonResultModel refreshFront() {
-		return sysService.refreshFront();
+	@PostMapping("/refresh")
+	public CommonResultModel refresh() {
+		return sysService.refresh();
 	}
 }
