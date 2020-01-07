@@ -85,3 +85,4 @@ INSERT INTO t_dept_info (dept_id, dept_name, branch_id) VALUES ('IC1212', 'BPO�
 INSERT INTO t_dept_info (dept_id, dept_name, branch_id) VALUES ('IC1220', '业务一部', 'IC1220');
 INSERT INTO t_dept_info (dept_id, dept_name, branch_id) VALUES ('IC1230', '业务二部', 'IC1230');
 INSERT INTO t_dept_info (dept_id, dept_name, branch_id) VALUES ('IC1310', '業務部', 'IC1310');
+INSERT INTO t_dept_info (dept_id, dept_name, branch_id) VALUES ('IC1999', 'WIST BU1', 'IC1000');
