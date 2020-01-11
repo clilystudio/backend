@@ -313,9 +313,10 @@ public class SysService {
 				winInfo.setWinTime(winTime);
 				winInfoRepository.insert(winInfo);
 
-				// 更新员工信息（允许重复中奖时，不应该有额外加权）
+				// 更新员工信息（允许重复中奖时，不应该有额外加权，不应该再享受分组分配）
 				emp.setEmpRate(BigDecimal.ONE);
 				emp.setPrizeFlag(CommonConst.PrizeFlag.WIN);
+				emp.setGroupId(CommonConst.UNLIMIT_GROUP);
 				empInfoRepository.updateByPrimaryKey(emp);
 			}
 			result.setCode(ResultCode.SUCCESS);
