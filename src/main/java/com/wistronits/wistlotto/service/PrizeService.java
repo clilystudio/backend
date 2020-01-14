@@ -101,6 +101,7 @@ public class PrizeService {
 		prizeInfoModel.setGroupLimit(groupLimit);
 		prizeInfoModel.setPrizeNumber(prizeSumNumber);
 		prizeInfoModel.setPrizeWinner(prizeSumWinner);
+		prizeInfoModel.setEmpInfos(lottoRepository.getPrizeEmpList(prizeInfo));
 		return prizeInfoModel;
 	}
 

@@ -2,6 +2,7 @@ package com.wistronits.wistlotto.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -56,4 +57,7 @@ public class PrizeInfoModel implements Serializable {
 
 	// 已中奖数量
 	private BigDecimal prizeWinner;
+
+	// 中奖员工一览
+	private List<PrizeEmpInfoModel> empInfos;
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import com.wistronits.wistlotto.model.EmpInfoModel;
 import com.wistronits.wistlotto.model.GroupInfoModel;
+import com.wistronits.wistlotto.model.PrizeEmpInfoModel;
 import com.wistronits.wistlotto.model.WinnerInfoModel;
 import com.wistronits.wistlotto.model.tables.TEmpInfo;
 import com.wistronits.wistlotto.model.tables.TPrizeInfo;
@@ -22,6 +23,13 @@ public interface LottoRepository {
 	 * @return 员工一览
 	 */
 	List<EmpInfoModel> getEmpList();
+
+	/**
+	 * 取得中奖员工一览
+	 * 
+	 * @return 中奖员工一览
+	 */
+	List<PrizeEmpInfoModel> getPrizeEmpList(TPrizeInfo prizeInfo);
 
 	/**
 	 * 取得中奖信息一览
