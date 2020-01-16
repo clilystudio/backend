@@ -21,4 +21,7 @@ public class PrizeEmpInfoModel implements Serializable {
 
 	// 抽奖组ID
 	private String groupId;
+
+	// 入职日期
+	private String empDate;
 }
